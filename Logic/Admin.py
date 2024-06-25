@@ -349,11 +349,11 @@ class Ui_Dialog(object):
 
         #gán sự kiện cho bảng khoa
         self.btnAddKhoa.clicked.connect(self.handleAddKhoa)
-        #self.btnUpdateKhoa.clicked.connect(self.handleUpdateKhoa)
-        #self.btnDeleteKhoa.clicked.connect(self.handleDeleteKhoa)
+        self.btnUpdateKhoa.clicked.connect(self.handleUpdateKhoa)
+        self.btnDeleteKhoa.clicked.connect(self.handleDeleteKhoa)
         #self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
         #self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
-        #self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
+        self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -450,6 +450,7 @@ class Ui_Dialog(object):
         selected_items = self.treeWidgetPH.selectedItems()
         selected_itemsMH = self.treeWidgetMH.selectedItems()
         selected_itemsLH = self.treeWidgetLH.selectedItems()
+        selected_itemsKhoa = self.treeWidgetKhoa.selectedItems()
         if selected_items:
                 item = selected_items[0]
                 id_phong = item.text(0)  # Lấy ID Phòng từ cột 0
@@ -476,6 +477,12 @@ class Ui_Dialog(object):
              self.txtIDLop.setText(id_lop)
              self.txtIDTenLop.setText(ten_lop)
              self.cbBoxIDKhoa_Lophoc.setCurrentText(id_Khoa)
+        if selected_itemsKhoa:
+             item = selected_itemsKhoa[0]
+             id_Khoa = item.text(0)
+             ten_khoa = item.text(1)
+             self.txtIDKhoa.setText(id_Khoa)
+             self.txtTenKhoa.setText(ten_khoa)
         # Hàm xử lý khi nhấn nút Sửa
     def handleUpdatePH(self):
         id_phong = self.txtIDPhong.text().strip()
@@ -816,8 +823,52 @@ class Ui_Dialog(object):
             # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
         self.txtIDKhoa.clear()
         self.txtTenKhoa.clear()
+    def handleUpdateKhoa(self):
+        id_khoa = self.txtIDKhoa.text().strip()
+        ten_khoa = self.txtTenKhoa.text().strip()
 
 
+        if not ten_khoa or not id_khoa:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn khoa để sửa!")
+                return
+
+        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
+        if database.update_Khoa(id_khoa, ten_khoa):
+                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật khoa thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+                self.loadDataToTreeWidgetKhoa()
+
+                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+                self.txtIDKhoa.clear()
+                self.txtTenKhoa.clear()
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật khoa thất bại!")
+    def handleDeleteKhoa(self):
+        # Lấy dòng được chọn trong treeWidgetPH
+        selected_items = self.treeWidgetKhoa.selectedItems()
+
+        if not selected_items:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
+                return
+
+    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
+        id_Khoa = selected_items[0].text(0)
+
+    # Hiển thị hộp thoại xác nhận xóa
+        reply = QMessageBox.question(self.treeWidgetKhoa, 'Xác nhận xóa', 
+                f'Bạn có chắc chắn muốn xóa phòng có ID {id_Khoa}?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                QMessageBox.StandardButton.No)
+
+        if reply == QMessageBox.StandardButton.Yes:
+
+                if database.delete_Khoa(id_Khoa):
+           
+                        self.loadDataToTreeWidgetKhoa()
+                        QMessageBox.information(self.treeWidgetKhoa, 'Thông báo', 'Xóa khoa thành công!')
+        else:
+            QMessageBox.critical(self.treeWidgetKhoa, 'Lỗi', 'Không thể xóa lớp học này!')
 
 
 

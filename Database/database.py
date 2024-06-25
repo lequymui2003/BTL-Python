@@ -257,8 +257,35 @@ def add_Khoa(id_khoa, ten_Khoa):
     connection.close()
 
     return True
+def update_Khoa(id_khoa, ten_khoa):
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM khoa WHERE idkhoa = %s"
+    cursor.execute(query_check, (id_khoa,))
+    if not cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
 
+    query_update = "UPDATE khoa SET tenKhoa = %s WHERE idKhoa = %s"
+    cursor.execute(query_update, (ten_khoa,id_khoa))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True 
+def delete_Khoa(id_Khoa):
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        query = "DELETE FROM khoa WHERE idkhoa = %s"
+        cursor.execute(query, (id_Khoa,))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return True
 
 
 
