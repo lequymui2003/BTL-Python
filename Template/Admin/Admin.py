@@ -172,9 +172,84 @@ class Ui_Dialog(object):
 "border: 1px solid #cccccc; /* Viền màu xám */")
         self.treeWidgetMH.setObjectName("treeWidgetMH")
         self.tabWidget.addTab(self.tab, "")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.label_7 = QtWidgets.QLabel(parent=self.tab_2)
+        self.label_7.setGeometry(QtCore.QRect(10, 20, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_7.setFont(font)
+        self.label_7.setObjectName("label_7")
+        self.label_8 = QtWidgets.QLabel(parent=self.tab_2)
+        self.label_8.setGeometry(QtCore.QRect(10, 70, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_8.setFont(font)
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(parent=self.tab_2)
+        self.label_9.setGeometry(QtCore.QRect(360, 20, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_9.setFont(font)
+        self.label_9.setObjectName("label_9")
+        self.txtIDLop = QtWidgets.QLineEdit(parent=self.tab_2)
+        self.txtIDLop.setGeometry(QtCore.QRect(90, 20, 181, 31))
+        self.txtIDLop.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDLop.setAutoFillBackground(False)
+        self.txtIDLop.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDLop.setObjectName("txtIDLop")
+        self.txtIDTenLop = QtWidgets.QLineEdit(parent=self.tab_2)
+        self.txtIDTenLop.setGeometry(QtCore.QRect(90, 70, 181, 31))
+        self.txtIDTenLop.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDTenLop.setAutoFillBackground(False)
+        self.txtIDTenLop.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDTenLop.setObjectName("txtIDTenLop")
+        self.cbBoxIDKhoa_Lophoc = QtWidgets.QComboBox(parent=self.tab_2)
+        self.cbBoxIDKhoa_Lophoc.setGeometry(QtCore.QRect(440, 20, 181, 31))
+        self.cbBoxIDKhoa_Lophoc.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.cbBoxIDKhoa_Lophoc.setObjectName("cbBoxIDKhoa_Lophoc")
+        self.treeWidgetLH = QtWidgets.QTreeWidget(parent=self.tab_2)
+        self.treeWidgetLH.setGeometry(QtCore.QRect(0, 170, 1021, 321))
+        self.treeWidgetLH.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.treeWidgetLH.setObjectName("treeWidgetLH")
+        self.txtSearchLophoc = QtWidgets.QLineEdit(parent=self.tab_2)
+        self.txtSearchLophoc.setGeometry(QtCore.QRect(1050, 20, 171, 31))
+        self.txtSearchLophoc.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSearchLophoc.setObjectName("txtSearchLophoc")
+        self.btSearchLophoc = QtWidgets.QPushButton(parent=self.tab_2)
+        self.btSearchLophoc.setGeometry(QtCore.QRect(1080, 70, 121, 41))
+        self.btSearchLophoc.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btSearchLophoc.setObjectName("btSearchLophoc")
+        self.btnAddLophoc = QtWidgets.QPushButton(parent=self.tab_2)
+        self.btnAddLophoc.setGeometry(QtCore.QRect(1080, 170, 121, 41))
+        self.btnAddLophoc.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnAddLophoc.setObjectName("btnAddLophoc")
+        self.btnUpdateLH = QtWidgets.QPushButton(parent=self.tab_2)
+        self.btnUpdateLH.setGeometry(QtCore.QRect(1080, 250, 121, 41))
+        self.btnUpdateLH.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnUpdateLH.setObjectName("btnUpdateLH")
+        self.btnDeleteLH = QtWidgets.QPushButton(parent=self.tab_2)
+        self.btnDeleteLH.setGeometry(QtCore.QRect(1080, 330, 121, 41))
+        self.btnDeleteLH.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnDeleteLH.setObjectName("btnDeleteLH")
+        self.tabWidget.addTab(self.tab_2, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -203,6 +278,17 @@ class Ui_Dialog(object):
         self.treeWidgetMH.headerItem().setText(2, _translate("Dialog", "Số tín chỉ"))
         self.treeWidgetMH.headerItem().setText(3, _translate("Dialog", "ID Khoa"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Dialog", "Môn học"))
+        self.label_7.setText(_translate("Dialog", "ID Lớp:"))
+        self.label_8.setText(_translate("Dialog", "Tên lớp:"))
+        self.label_9.setText(_translate("Dialog", "ID Khoa:"))
+        self.treeWidgetLH.headerItem().setText(0, _translate("Dialog", "ID Lớp"))
+        self.treeWidgetLH.headerItem().setText(1, _translate("Dialog", "Tên Lớp"))
+        self.treeWidgetLH.headerItem().setText(2, _translate("Dialog", "ID Khoa"))
+        self.btSearchLophoc.setText(_translate("Dialog", "Tìm kiếm"))
+        self.btnAddLophoc.setText(_translate("Dialog", "Thêm"))
+        self.btnUpdateLH.setText(_translate("Dialog", "Sửa"))
+        self.btnDeleteLH.setText(_translate("Dialog", "Xóa"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Lớp học"))
 
 
 if __name__ == "__main__":

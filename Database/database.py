@@ -157,6 +157,33 @@ def search_MH(ten_MH):
         result = cursor.fetchall()
 
         return result
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng lớp học
+def load_dataLH():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = "SELECT * FROM lop"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def add_LH(id_lop, ten_lop, id_khoa):
 
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM lop WHERE idLop = %s OR tenLop = %s"
+    cursor.execute(query_check, (id_lop, ten_lop))
+    if cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
+
+    query_insert = "INSERT INTO lop (idLop, tenLop, idKhoa) VALUES (%s, %s, %s)"
+    cursor.execute(query_insert, (id_lop, ten_lop, id_khoa))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True
 

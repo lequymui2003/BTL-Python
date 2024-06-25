@@ -41,7 +41,7 @@ color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -499,6 +499,235 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
        <string>ID Khoa</string>
       </property>
      </column>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>Lớp học</string>
+    </attribute>
+    <widget class="QLabel" name="label_7">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>ID Lớp:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Tên lớp:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_9">
+     <property name="geometry">
+      <rect>
+       <x>360</x>
+       <y>20</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>ID Khoa:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtIDLop">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtIDTenLop">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>70</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="cbBoxIDKhoa_Lophoc">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>20</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetLH">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>170</y>
+       <width>1021</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>ID Lớp</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên Lớp</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>ID Khoa</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="txtSearchLophoc">
+     <property name="geometry">
+      <rect>
+       <x>1050</x>
+       <y>20</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btSearchLophoc">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>70</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tìm kiếm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnAddLophoc">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>170</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Thêm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnUpdateLH">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>250</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Sửa</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnDeleteLH">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>330</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Xóa</string>
+     </property>
     </widget>
    </widget>
   </widget>
