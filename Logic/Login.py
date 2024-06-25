@@ -9,6 +9,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from Database import database
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.session = {}  # Khởi tạo session như một từ điển trống
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(793, 592)
@@ -65,6 +67,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(8)
         self.txtPassword.setFont(font)
+        self.txtPassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.txtPassword.setObjectName("txtPassword")
         self.LinkQuenMatKhau = QtWidgets.QCommandLinkButton(parent=self.groupBox)
         self.LinkQuenMatKhau.setGeometry(QtCore.QRect(20, 240, 161, 41))
@@ -131,8 +134,12 @@ class Ui_MainWindow(object):
             #print(f"hashed_password: {hashed_password}")
             #print(f"password: {password}")
             if hashed_password == password:
+                 # Lưu thông tin phiên làm việc
+                self.session['username'] = username
+                self.session['role'] = role
                 if role == 'admin':
                     QMessageBox.information(None, "Thông báo", "Đăng nhập thành công! Bạn là admin.")
+                    self.openAdminWindow()  # Chuyển hướng đến trang Admin
                 else:
                     QMessageBox.information(None, "Thông báo", "Đăng nhập thành công! Bạn là user.")
             else:
@@ -161,6 +168,15 @@ class Ui_MainWindow(object):
         self.ui_second = Ui_Dialog()
         self.ui_second.setupUi(self.ForgetpasswordWindow)
         self.ForgetpasswordWindow.show()
+    def openAdminWindow(self):
+        from Admin import Ui_Dialog
+        self.adminWindow = QtWidgets.QMainWindow()
+        self.ui_admin = Ui_Dialog(self.session)
+        #print(f"session: {self.session["username"]}") 
+        self.ui_admin.setupUi(self.adminWindow)
+        self.adminWindow.show()
+        MainWindow.close()  # Đóng cửa sổ đăng nhập
+
 
 if __name__ == "__main__":
     import sys

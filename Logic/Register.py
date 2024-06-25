@@ -61,6 +61,7 @@ class Ui_Dialog(object):
         font = QtGui.QFont()
         font.setPointSize(8)
         self.txtPassword.setFont(font)
+        self.txtPassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.txtPassword.setObjectName("txtPassword")
         self.label_4 = QtWidgets.QLabel(parent=self.groupBox)
         self.label_4.setGeometry(QtCore.QRect(10, 300, 121, 21))

@@ -7,9 +7,11 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-
+from PyQt6.QtWidgets import QMessageBox
 
 class Ui_Dialog(object):
+    def __init__(self, session):
+        self.session = session
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1249, 582)
@@ -661,6 +663,8 @@ class Ui_Dialog(object):
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
+        self.checkSession(Dialog)
+
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -786,12 +790,27 @@ class Ui_Dialog(object):
         self.label_26.setText(_translate("Dialog", "Thời gian kết thúc:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_9), _translate("Dialog", "Xếp lịch"))
 
+    def checkSession(self, Dialog):
+        if 'username' not in self.session:
+                QMessageBox.warning(Dialog, "Thông báo", "Vui lòng đăng nhập trước khi truy cập trang này!")
+                Dialog.close()  # Đóng cửa sổ Admin
+                self.openLoginWindow()
+        else:
+                Dialog.show()  # Hiển thị cửa sổ Admin nếu đã đăng nhập
+
+    def openLoginWindow(self):
+        from Login import Ui_MainWindow
+        self.loginWindow = QtWidgets.QMainWindow()
+        self.ui_login = Ui_MainWindow()
+        self.ui_login.setupUi(self.loginWindow)
+        self.loginWindow.show()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    session = {}  # Tạo một session rỗng
+    ui = Ui_Dialog(session)
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec())
