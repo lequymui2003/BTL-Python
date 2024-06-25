@@ -286,7 +286,19 @@ def delete_Khoa(id_Khoa):
         connection.close()
 
         return True
+def search_Khoa(ten_Khoa):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
 
+       
+        query = "SELECT * FROM khoa WHERE tenKhoa LIKE %s"
+        cursor.execute(query, (f"%{ten_Khoa}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
 
 
 

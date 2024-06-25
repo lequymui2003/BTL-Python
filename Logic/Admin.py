@@ -351,8 +351,8 @@ class Ui_Dialog(object):
         self.btnAddKhoa.clicked.connect(self.handleAddKhoa)
         self.btnUpdateKhoa.clicked.connect(self.handleUpdateKhoa)
         self.btnDeleteKhoa.clicked.connect(self.handleDeleteKhoa)
-        #self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
-        #self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
+        self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
+        self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
         self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def retranslateUi(self, Dialog):
@@ -869,8 +869,29 @@ class Ui_Dialog(object):
                         QMessageBox.information(self.treeWidgetKhoa, 'Thông báo', 'Xóa khoa thành công!')
         else:
             QMessageBox.critical(self.treeWidgetKhoa, 'Lỗi', 'Không thể xóa lớp học này!')
+    def handleSearchKhoa(self):
+        # Lấy nội dung từ ô input tìm kiếm
+        ten_Khoa = self.txtSearchKhoa.text().strip()
 
+        if ten_Khoa:
+                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
+                khoa_list = database.search_Khoa(ten_Khoa)
 
+        # Xóa dữ liệu cũ trên treeViewPH
+                self.treeWidgetKhoa.clear()
+
+        # Thêm dữ liệu mới vào treeViewPH
+                for khoa in khoa_list:
+                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetKhoa)
+                        item.setText(0, str(khoa[0]))  
+                        item.setText(1, khoa[1])  
+
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên phòng học để tìm kiếm!")
+    def handleInputChangedKhoa(self, text):
+        if not text:
+        # Nếu ô input rỗng, load lại dữ liệu ban đầu
+                self.loadDataToTreeWidgetKhoa()
 
     def checkSession(self, Dialog):
         if 'username' not in self.session:
