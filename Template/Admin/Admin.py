@@ -310,9 +310,98 @@ class Ui_Dialog(object):
 "color: rgb(255, 255, 255);")
         self.btnDeleteKhoa.setObjectName("btnDeleteKhoa")
         self.tabWidget.addTab(self.tab_4, "")
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.label_12 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_12.setGeometry(QtCore.QRect(10, 20, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_12.setFont(font)
+        self.label_12.setObjectName("label_12")
+        self.label_13 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_13.setGeometry(QtCore.QRect(10, 70, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_13.setFont(font)
+        self.label_13.setObjectName("label_13")
+        self.label_14 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_14.setGeometry(QtCore.QRect(450, 20, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_14.setFont(font)
+        self.label_14.setObjectName("label_14")
+        self.label_15 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_15.setGeometry(QtCore.QRect(450, 70, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_15.setFont(font)
+        self.label_15.setObjectName("label_15")
+        self.treeWidgetGV = QtWidgets.QTreeWidget(parent=self.tab_5)
+        self.treeWidgetGV.setGeometry(QtCore.QRect(0, 170, 1021, 321))
+        self.treeWidgetGV.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.treeWidgetGV.setObjectName("treeWidgetGV")
+        self.txtIDGiangvien = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtIDGiangvien.setGeometry(QtCore.QRect(140, 20, 181, 31))
+        self.txtIDGiangvien.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDGiangvien.setAutoFillBackground(False)
+        self.txtIDGiangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDGiangvien.setObjectName("txtIDGiangvien")
+        self.txtTenGiangvien = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtTenGiangvien.setGeometry(QtCore.QRect(140, 70, 181, 31))
+        self.txtTenGiangvien.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtTenGiangvien.setAutoFillBackground(False)
+        self.txtTenGiangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenGiangvien.setObjectName("txtTenGiangvien")
+        self.txtSDT = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtSDT.setGeometry(QtCore.QRect(580, 20, 181, 31))
+        self.txtSDT.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtSDT.setAutoFillBackground(False)
+        self.txtSDT.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSDT.setObjectName("txtSDT")
+        self.cbBoxIDKhoa_Giangvien = QtWidgets.QComboBox(parent=self.tab_5)
+        self.cbBoxIDKhoa_Giangvien.setGeometry(QtCore.QRect(580, 70, 181, 31))
+        self.cbBoxIDKhoa_Giangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.cbBoxIDKhoa_Giangvien.setObjectName("cbBoxIDKhoa_Giangvien")
+        self.txtSearchKhoa_2 = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtSearchKhoa_2.setGeometry(QtCore.QRect(1050, 20, 171, 31))
+        self.txtSearchKhoa_2.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSearchKhoa_2.setObjectName("txtSearchKhoa_2")
+        self.btSearchGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btSearchGV.setGeometry(QtCore.QRect(1080, 70, 121, 41))
+        self.btSearchGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btSearchGV.setObjectName("btSearchGV")
+        self.btnAddGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnAddGV.setGeometry(QtCore.QRect(1080, 170, 121, 41))
+        self.btnAddGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnAddGV.setObjectName("btnAddGV")
+        self.btnUpdateGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnUpdateGV.setGeometry(QtCore.QRect(1080, 240, 121, 41))
+        self.btnUpdateGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnUpdateGV.setObjectName("btnUpdateGV")
+        self.btnDeleteGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnDeleteGV.setGeometry(QtCore.QRect(1080, 310, 121, 41))
+        self.btnDeleteGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnDeleteGV.setObjectName("btnDeleteGV")
+        self.tabWidget.addTab(self.tab_5, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -361,6 +450,19 @@ class Ui_Dialog(object):
         self.btnUpdateKhoa.setText(_translate("Dialog", "Sửa"))
         self.btnDeleteKhoa.setText(_translate("Dialog", "Xóa"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Dialog", "Khoa"))
+        self.label_12.setText(_translate("Dialog", "ID Giảng viên:"))
+        self.label_13.setText(_translate("Dialog", "Tên giảng viên:"))
+        self.label_14.setText(_translate("Dialog", "Số điện thoại:"))
+        self.label_15.setText(_translate("Dialog", "ID Khoa:"))
+        self.treeWidgetGV.headerItem().setText(0, _translate("Dialog", "ID Giảng viên"))
+        self.treeWidgetGV.headerItem().setText(1, _translate("Dialog", "Tên giảng viên"))
+        self.treeWidgetGV.headerItem().setText(2, _translate("Dialog", "Số điện thoại"))
+        self.treeWidgetGV.headerItem().setText(3, _translate("Dialog", "ID Khoa"))
+        self.btSearchGV.setText(_translate("Dialog", "Tìm kiếm"))
+        self.btnAddGV.setText(_translate("Dialog", "Thêm"))
+        self.btnUpdateGV.setText(_translate("Dialog", "Sửa"))
+        self.btnDeleteGV.setText(_translate("Dialog", "Xóa"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("Dialog", "Giảng viên"))
 
 
 if __name__ == "__main__":

@@ -299,12 +299,77 @@ def search_Khoa(ten_Khoa):
         result = cursor.fetchall()
 
         return result
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng Giảng viên
+def load_dataGV():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = "SELECT idGiangVien, tenGV, sdt, idKhoa FROM giangvien"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def add_GV(id_GV, ten_GV, sdt, id_Khoa):
 
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM giangvien WHERE idGiangVien = %s"
+    cursor.execute(query_check, (id_GV,))
+    if cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
 
+    query_insert = "INSERT INTO giangvien (idGiangVien,tenGV, sdt, idKhoa ) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query_insert, (id_GV, ten_GV, sdt, id_Khoa))
+    connection.commit()
+    cursor.close()
+    connection.close()
 
+    return True
+def update_GV(id_GV, ten_GV, sdt, id_Khoa):
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM giangvien WHERE idGiangVien = %s"
+    cursor.execute(query_check, (id_GV,))
+    if not cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
 
+    query_update = "UPDATE giangvien SET tenGV = %s, sdt = %s, idKhoa = %s WHERE idGiangVien = %s"  
+    cursor.execute(query_update, (ten_GV, sdt, id_Khoa, id_GV))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True 
+def delete_GV(id_GV):
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        query = "DELETE FROM giangvien WHERE idGiangVien = %s"
+        cursor.execute(query, (id_GV,))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return True
+def search_GV(ten_GV):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = "SELECT idGiangVien, tenGV, sdt, idKhoa FROM giangvien WHERE tenGV LIKE %s"
+        cursor.execute(query, (f"%{ten_GV}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
 
 
 

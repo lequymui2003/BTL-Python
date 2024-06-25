@@ -310,9 +310,98 @@ class Ui_Dialog(object):
 "color: rgb(255, 255, 255);")
         self.btnDeleteKhoa.setObjectName("btnDeleteKhoa")
         self.tabWidget.addTab(self.tab_4, "")
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.label_12 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_12.setGeometry(QtCore.QRect(10, 20, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_12.setFont(font)
+        self.label_12.setObjectName("label_12")
+        self.label_13 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_13.setGeometry(QtCore.QRect(10, 70, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_13.setFont(font)
+        self.label_13.setObjectName("label_13")
+        self.label_14 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_14.setGeometry(QtCore.QRect(450, 20, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_14.setFont(font)
+        self.label_14.setObjectName("label_14")
+        self.label_15 = QtWidgets.QLabel(parent=self.tab_5)
+        self.label_15.setGeometry(QtCore.QRect(450, 70, 111, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_15.setFont(font)
+        self.label_15.setObjectName("label_15")
+        self.treeWidgetGV = QtWidgets.QTreeWidget(parent=self.tab_5)
+        self.treeWidgetGV.setGeometry(QtCore.QRect(0, 170, 1021, 321))
+        self.treeWidgetGV.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.treeWidgetGV.setObjectName("treeWidgetGV")
+        self.txtIDGiangvien = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtIDGiangvien.setGeometry(QtCore.QRect(140, 20, 181, 31))
+        self.txtIDGiangvien.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDGiangvien.setAutoFillBackground(False)
+        self.txtIDGiangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDGiangvien.setObjectName("txtIDGiangvien")
+        self.txtTenGiangvien = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtTenGiangvien.setGeometry(QtCore.QRect(140, 70, 181, 31))
+        self.txtTenGiangvien.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtTenGiangvien.setAutoFillBackground(False)
+        self.txtTenGiangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenGiangvien.setObjectName("txtTenGiangvien")
+        self.txtSDT = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtSDT.setGeometry(QtCore.QRect(580, 20, 181, 31))
+        self.txtSDT.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtSDT.setAutoFillBackground(False)
+        self.txtSDT.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSDT.setObjectName("txtSDT")
+        self.cbBoxIDKhoa_Giangvien = QtWidgets.QComboBox(parent=self.tab_5)
+        self.cbBoxIDKhoa_Giangvien.setGeometry(QtCore.QRect(580, 70, 181, 31))
+        self.cbBoxIDKhoa_Giangvien.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.cbBoxIDKhoa_Giangvien.setObjectName("cbBoxIDKhoa_Giangvien")
+        self.txtSearchKhoa_2 = QtWidgets.QLineEdit(parent=self.tab_5)
+        self.txtSearchKhoa_2.setGeometry(QtCore.QRect(1050, 20, 171, 31))
+        self.txtSearchKhoa_2.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSearchKhoa_2.setObjectName("txtSearchKhoa_2")
+        self.btSearchGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btSearchGV.setGeometry(QtCore.QRect(1080, 70, 121, 41))
+        self.btSearchGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btSearchGV.setObjectName("btSearchGV")
+        self.btnAddGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnAddGV.setGeometry(QtCore.QRect(1080, 170, 121, 41))
+        self.btnAddGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnAddGV.setObjectName("btnAddGV")
+        self.btnUpdateGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnUpdateGV.setGeometry(QtCore.QRect(1080, 240, 121, 41))
+        self.btnUpdateGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnUpdateGV.setObjectName("btnUpdateGV")
+        self.btnDeleteGV = QtWidgets.QPushButton(parent=self.tab_5)
+        self.btnDeleteGV.setGeometry(QtCore.QRect(1080, 310, 121, 41))
+        self.btnDeleteGV.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnDeleteGV.setObjectName("btnDeleteGV")
+        self.tabWidget.addTab(self.tab_5, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         # Load dữ liệu từ MySQL vào treeWidgetPH
@@ -320,6 +409,7 @@ class Ui_Dialog(object):
         self.loadDataToTreeWidgetMH()
         self.loadDataToTreeWidgetLH()
         self.loadDataToTreeWidgetKhoa()
+        self.loadDataToTreeWidgetGV()
         self.load_id_khoa()
 
         # gán sự kiện click bảng phòng học
@@ -354,6 +444,24 @@ class Ui_Dialog(object):
         self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
         self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
         self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
+
+        #gán sự kiện cho bảng khoa
+        self.btnAddKhoa.clicked.connect(self.handleAddKhoa)
+        self.btnUpdateKhoa.clicked.connect(self.handleUpdateKhoa)
+        self.btnDeleteKhoa.clicked.connect(self.handleDeleteKhoa)
+        self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
+        self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
+        self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
+
+        #gán sự kiện cho bảng khoa
+        self.btnAddGV.clicked.connect(self.handleAddGV)
+        self.btnUpdateGV.clicked.connect(self.handleUpdateGV)
+        self.btnDeleteGV.clicked.connect(self.handleDeleteGV)
+        self.txtSearchKhoa_2.textChanged.connect(self.handleInputChangedGV)
+        self.btSearchGV.clicked.connect(self.handleSearchGV)
+        self.treeWidgetGV.itemSelectionChanged.connect(self.handleSelectionChanged)
+
+
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -401,10 +509,25 @@ class Ui_Dialog(object):
         self.btnUpdateKhoa.setText(_translate("Dialog", "Sửa"))
         self.btnDeleteKhoa.setText(_translate("Dialog", "Xóa"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Dialog", "Khoa"))
+        self.label_12.setText(_translate("Dialog", "ID Giảng viên:"))
+        self.label_13.setText(_translate("Dialog", "Tên giảng viên:"))
+        self.label_14.setText(_translate("Dialog", "Số điện thoại:"))
+        self.label_15.setText(_translate("Dialog", "ID Khoa:"))
+        self.treeWidgetGV.headerItem().setText(0, _translate("Dialog", "ID Giảng viên"))
+        self.treeWidgetGV.headerItem().setText(1, _translate("Dialog", "Tên giảng viên"))
+        self.treeWidgetGV.headerItem().setText(2, _translate("Dialog", "Số điện thoại"))
+        self.treeWidgetGV.headerItem().setText(3, _translate("Dialog", "ID Khoa"))
+        self.btSearchGV.setText(_translate("Dialog", "Tìm kiếm"))
+        self.btnAddGV.setText(_translate("Dialog", "Thêm"))
+        self.btnUpdateGV.setText(_translate("Dialog", "Sửa"))
+        self.btnDeleteGV.setText(_translate("Dialog", "Xóa"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), _translate("Dialog", "Giảng viên"))
+    
     def load_id_khoa(self):
         id_khoa_list = database.get_all_id_khoa()
         self.cbBoxIDKhoa_Monhoc.addItems(id_khoa_list)
         self.cbBoxIDKhoa_Lophoc.addItems(id_khoa_list)
+        self.cbBoxIDKhoa_Giangvien.addItems(id_khoa_list)
 # thêm, sửa, xóa, tìm kiếm hiển thị bảng Phòng học
     def loadDataToTreeWidget(self):
         # Lấy dữ liệu từ cơ sở dữ liệu
@@ -451,6 +574,7 @@ class Ui_Dialog(object):
         selected_itemsMH = self.treeWidgetMH.selectedItems()
         selected_itemsLH = self.treeWidgetLH.selectedItems()
         selected_itemsKhoa = self.treeWidgetKhoa.selectedItems()
+        selected_itemsGV = self.treeWidgetGV.selectedItems()
         if selected_items:
                 item = selected_items[0]
                 id_phong = item.text(0)  # Lấy ID Phòng từ cột 0
@@ -483,6 +607,16 @@ class Ui_Dialog(object):
              ten_khoa = item.text(1)
              self.txtIDKhoa.setText(id_Khoa)
              self.txtTenKhoa.setText(ten_khoa)
+        if selected_itemsGV:
+             item = selected_itemsGV[0]
+             id_GV = item.text(0)
+             ten_GV = item.text(1)
+             sdt = item.text(2)
+             id_Khoa = item.text(3)
+             self.txtIDGiangvien.setText(id_GV)
+             self.txtTenGiangvien.setText(ten_GV)
+             self.txtSDT.setText(sdt)
+             self.cbBoxIDKhoa_Giangvien.setCurrentText(id_Khoa)
         # Hàm xử lý khi nhấn nút Sửa
     def handleUpdatePH(self):
         id_phong = self.txtIDPhong.text().strip()
@@ -747,7 +881,7 @@ class Ui_Dialog(object):
 
     # Hiển thị hộp thoại xác nhận xóa
         reply = QMessageBox.question(self.treeWidgetLH, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa phòng có ID {id_Lop}?',
+                f'Bạn có chắc chắn muốn xóa lớp có ID {id_Lop}?',
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
                 QMessageBox.StandardButton.No)
 
@@ -857,7 +991,7 @@ class Ui_Dialog(object):
 
     # Hiển thị hộp thoại xác nhận xóa
         reply = QMessageBox.question(self.treeWidgetKhoa, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa phòng có ID {id_Khoa}?',
+                f'Bạn có chắc chắn muốn xóa khoa có ID {id_Khoa}?',
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
                 QMessageBox.StandardButton.No)
 
@@ -892,6 +1026,129 @@ class Ui_Dialog(object):
         if not text:
         # Nếu ô input rỗng, load lại dữ liệu ban đầu
                 self.loadDataToTreeWidgetKhoa()
+
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng giảng viên
+    def loadDataToTreeWidgetGV(self):
+        # Lấy dữ liệu từ cơ sở dữ liệu
+        data = database.load_dataGV()
+
+        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
+        self.treeWidgetGV.clear()
+
+        for row in data:
+            parent_item = QTreeWidgetItem()
+            parent_item.setText(0, str(row[0]))  
+            parent_item.setText(1, str(row[1]))      
+            parent_item.setText(2, str(row[2]))      
+            parent_item.setText(3, row[3])      
+
+            self.treeWidgetGV.addTopLevelItem(parent_item)
+    def handleAddGV(self):
+        id_GV = self.txtIDGiangvien.text().strip()
+        ten_GV = self.txtTenGiangvien.text().strip()
+        sdt = self.txtSDT.text().strip()
+        id_Khoa = self.cbBoxIDKhoa_Giangvien.currentText().strip()
+        
+
+        if not id_GV or not ten_GV or not sdt or not id_Khoa:
+            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
+            return
+
+        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
+        if not database.add_GV(id_GV, ten_GV, sdt, id_Khoa):
+            QMessageBox.warning(self.tab_3, "Thông báo", "ID Giảng viên hoặc Tên giảng viên đã tồn tại!")
+            self.txtIDGiangvien.clear()
+            self.txtTenGiangvien.clear()
+            self.txtSDT.clear()
+            return
+       
+                # Nếu không có lỗi, hiển thị thông báo thành công
+        QMessageBox.information(self.tab_3, "Thông báo", "Thêm giảng viên thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+        self.loadDataToTreeWidgetGV()
+
+            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+        self.txtIDGiangvien.clear()
+        self.txtTenGiangvien.clear()
+        self.txtSDT.clear()
+    def handleUpdateGV(self):
+        id_GV = self.txtIDGiangvien.text().strip()
+        ten_GV = self.txtTenGiangvien.text().strip()
+        sdt = self.txtSDT.text().strip()
+        id_Khoa = self.cbBoxIDKhoa_Giangvien.currentText().strip()
+        
+
+
+        if not id_GV or not ten_GV or not sdt or not id_Khoa:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn giảng viên để sửa!")
+                return
+
+        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
+        if database.update_GV(id_GV, ten_GV, sdt, id_Khoa):
+                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật thông tin giảng viên thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+                self.loadDataToTreeWidgetGV()
+
+                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+                self.txtIDGiangvien.clear()
+                self.txtTenGiangvien.clear()
+                self.txtSDT.clear()
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật khoa thất bại!")
+    def handleDeleteGV(self):
+        # Lấy dòng được chọn trong treeWidgetPH
+        selected_items = self.treeWidgetGV.selectedItems()
+
+        if not selected_items:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
+                return
+
+    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
+        id_GV = selected_items[0].text(0)
+
+    # Hiển thị hộp thoại xác nhận xóa
+        reply = QMessageBox.question(self.treeWidgetGV, 'Xác nhận xóa', 
+                f'Bạn có chắc chắn muốn xóa giảng viên có ID {id_GV}?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                QMessageBox.StandardButton.No)
+
+        if reply == QMessageBox.StandardButton.Yes:
+
+                if database.delete_GV(id_GV):
+           
+                        self.loadDataToTreeWidgetGV()
+                        QMessageBox.information(self.treeWidgetGV, 'Thông báo', 'Xóa giảng viên thành công!')
+        else:
+            QMessageBox.critical(self.treeWidgetGV, 'Lỗi', 'Không thể xóa giảng viên này!')
+    def handleSearchGV(self):
+        # Lấy nội dung từ ô input tìm kiếm
+        ten_GV= self.txtSearchKhoa_2.text().strip()
+
+        if ten_GV:
+                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
+                giangvien_list = database.search_GV(ten_GV)
+
+        # Xóa dữ liệu cũ trên treeViewPH
+                self.treeWidgetGV.clear()
+
+        # Thêm dữ liệu mới vào treeViewPH
+                for giangvien in giangvien_list:
+                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetGV)
+                        item.setText(0, str(giangvien[0]))  
+                        item.setText(1, str(giangvien[1]))  
+                        item.setText(2, str(giangvien[2]))  
+                        item.setText(3, giangvien[3])  
+
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên giảng viên để tìm kiếm!")
+    def handleInputChangedGV(self, text):
+        if not text:
+        # Nếu ô input rỗng, load lại dữ liệu ban đầu
+                self.loadDataToTreeWidgetGV()
+
+
 
     def checkSession(self, Dialog):
         if 'username' not in self.session:
