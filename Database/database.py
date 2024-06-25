@@ -215,3 +215,35 @@ def delete_LH(id_Lop):
         connection.close()
 
         return True
+def search_LH(ten_lop):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = "SELECT * FROM lop WHERE tenLop LIKE %s"
+        cursor.execute(query, (f"%{ten_lop}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -279,8 +279,8 @@ class Ui_Dialog(object):
         self.btnAddLophoc.clicked.connect(self.handleAddLH)
         self.btnUpdateLH.clicked.connect(self.handleUpdateLH)
         self.btnDeleteLH.clicked.connect(self.handleDeleteLH)
-        #self.txtSearchLophoc.textChanged.connect(self.handleInputChangedLH)
-        #self.btSearchLophoc.clicked.connect(self.handleSearchLH)
+        self.txtSearchLophoc.textChanged.connect(self.handleInputChangedLH)
+        self.btSearchLophoc.clicked.connect(self.handleSearchLH)
         self.treeWidgetLH.itemSelectionChanged.connect(self.handleSelectionChanged)
 
 
@@ -674,7 +674,30 @@ class Ui_Dialog(object):
                         QMessageBox.information(self.treeWidgetLH, 'Thông báo', 'Xóa lớp học thành công!')
         else:
             QMessageBox.critical(self.treeWidgetLH, 'Lỗi', 'Không thể xóa lớp học này!')
+    def handleSearchLH(self):
+        # Lấy nội dung từ ô input tìm kiếm
+        ten_lop = self.txtSearchLophoc.text().strip()
 
+        if ten_lop:
+                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
+                lop_list = database.search_LH(ten_lop)
+
+        # Xóa dữ liệu cũ trên treeViewPH
+                self.treeWidgetLH.clear()
+
+        # Thêm dữ liệu mới vào treeViewPH
+                for lop in lop_list:
+                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetLH)
+                        item.setText(0, str(lop[0]))  
+                        item.setText(1, str(lop[1]))  
+                        item.setText(2, lop[2]) 
+
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên phòng học để tìm kiếm!")
+    def handleInputChangedLH(self, text):
+        if not text:
+        # Nếu ô input rỗng, load lại dữ liệu ban đầu
+                self.loadDataToTreeWidgetLH()
 
 
     def checkSession(self, Dialog):
