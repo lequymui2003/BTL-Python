@@ -133,8 +133,30 @@ def update_MH(id_mon, ten_mon, so_tin_chi, id_khoa):
     connection.close()
 
     return True 
+def delete_MH(id_mon):
+        connection = create_connection()
+        cursor = connection.cursor()
 
+        query = "DELETE FROM monhoc WHERE idMon = %s"
+        cursor.execute(query, (id_mon,))
+        connection.commit()
+        cursor.close()
+        connection.close()
 
+        return True
+def search_MH(ten_MH):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        # Câu truy vấn SQL để tìm kiếm phòng học theo tên
+        query = "SELECT * FROM monhoc WHERE tenMon LIKE %s"
+        cursor.execute(query, (f"%{ten_MH}%",))
+
+        # Lấy tất cả các kết quả từ câu truy vấn
+        result = cursor.fetchall()
+
+        return result
 
 
 

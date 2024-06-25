@@ -194,6 +194,9 @@ class Ui_Dialog(object):
         #gán sự kiện cho bảng môn học
         self.btnAddMH.clicked.connect(self.handleAddMH)
         self.btnUpdateMH.clicked.connect(self.handleUpdateMH)
+        self.btnDeleteMH.clicked.connect(self.handleDeleteMH)
+        self.txtSearchMonhoc.textChanged.connect(self.handleInputChangedMH)
+        self.btSearchMH.clicked.connect(self.handleSearchMH)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -426,9 +429,56 @@ class Ui_Dialog(object):
                 self.txtSoTinChi.clear()
         else:
                 QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
+    def handleDeleteMH(self):
+        # Lấy dòng được chọn trong treeWidgetPH
+        selected_items = self.treeWidgetMH.selectedItems()
 
+        if not selected_items:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
+                return
 
+    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
+        id_mon = selected_items[0].text(0)
 
+    # Hiển thị hộp thoại xác nhận xóa
+        reply = QMessageBox.question(self.treeWidgetMH, 'Xác nhận xóa', 
+                f'Bạn có chắc chắn muốn xóa phòng có ID {id_mon}?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                QMessageBox.StandardButton.No)
+
+        if reply == QMessageBox.StandardButton.Yes:
+        # Gọi hàm xóa dữ liệu từ cơ sở dữ liệu
+                if database.delete_MH(id_mon):
+            # Xóa thành công, cập nhật lại treeWidgetPH
+                        self.loadDataToTreeWidgetMH()
+                        QMessageBox.information(self.treeWidgetPH, 'Thông báo', 'Xóa phòng thành công!')
+        else:
+            QMessageBox.critical(self.treeWidgetPH, 'Lỗi', 'Không thể xóa phòng này!')
+    def handleSearchMH(self):
+        # Lấy nội dung từ ô input tìm kiếm
+        ten_MH = self.txtSearchMonhoc.text().strip()
+
+        if ten_MH:
+                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
+                mon_list = database.search_MH(ten_MH)
+
+        # Xóa dữ liệu cũ trên treeViewPH
+                self.treeWidgetMH.clear()
+
+        # Thêm dữ liệu mới vào treeViewPH
+                for mon in mon_list:
+                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetMH)
+                        item.setText(0, str(mon[0]))  
+                        item.setText(1, str(mon[1]))  
+                        item.setText(2, str(mon[2])) 
+                        item.setText(3, mon[3])  
+
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên phòng học để tìm kiếm!")
+    def handleInputChangedMH(self, text):
+        if not text:
+        # Nếu ô input rỗng, load lại dữ liệu ban đầu
+                self.loadDataToTreeWidgetMH()
 
 
 
