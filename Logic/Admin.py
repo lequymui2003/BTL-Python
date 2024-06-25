@@ -1,6 +1,10 @@
+import sys
+import os
 from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QDialog, QTreeWidget, QTreeWidgetItem, QLineEdit, QPushButton
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from Database import database  # Import từ module database
+
 
 class Ui_Dialog(object):
     def __init__(self, session):
@@ -107,6 +111,8 @@ class Ui_Dialog(object):
         self.btnAddPH.clicked.connect(self.handleAddPH)
         self.btnUpdatePH.clicked.connect(self.handleUpdatePH)
         self.btnDeletePH.clicked.connect(self.handleDeletePH)
+        self.btSearchPH.clicked.connect(self.handleSearch)
+        self.txtSearchPH.textChanged.connect(self.handleInputChanged)
         self.treeWidgetPH.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def retranslateUi(self, Dialog):
@@ -194,7 +200,6 @@ class Ui_Dialog(object):
                 self.txtTenPhong.clear()
         else:
                 QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
-
     def handleDeletePH(self):
         # Lấy dòng được chọn trong treeWidgetPH
         selected_items = self.treeWidgetPH.selectedItems()
@@ -220,7 +225,29 @@ class Ui_Dialog(object):
                         QMessageBox.information(self.treeWidgetPH, 'Thông báo', 'Xóa phòng thành công!')
         else:
             QMessageBox.critical(self.treeWidgetPH, 'Lỗi', 'Không thể xóa phòng này!')
+    def handleSearch(self):
+        # Lấy nội dung từ ô input tìm kiếm
+        ten_phong = self.txtSearchPH.text().strip()
 
+        if ten_phong:
+                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
+                phong_list = database.search_phong(ten_phong)
+
+        # Xóa dữ liệu cũ trên treeViewPH
+                self.treeWidgetPH.clear()
+
+        # Thêm dữ liệu mới vào treeViewPH
+                for phong in phong_list:
+                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetPH)
+                        item.setText(0, str(phong[0]))  # Giả sử cột 0 là ID_Phong
+                        item.setText(1, phong[1])  # Giả sử cột 1 là Ten_Phong
+
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên phòng học để tìm kiếm!")
+    def handleInputChanged(self, text):
+        if not text:
+        # Nếu ô input rỗng, load lại dữ liệu ban đầu
+                self.loadDataToTreeWidget()
 
 
 
