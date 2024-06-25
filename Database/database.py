@@ -15,6 +15,55 @@ def get_all_id_khoa():
         cursor.execute(query)
         results = cursor.fetchall()
         return [row[0] for row in results]
+def get_all_csvc():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = "SELECT id, ten FROM cosovatchat"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    return results
+def get_all_phonghoc():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = "SELECT idPhong, tenPhong FROM phonghoc"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    return results
+def get_all_name_khoa():
+        connection = create_connection()
+        cursor = connection.cursor()
+        query = "SELECT idKhoa FROM khoa"
+        cursor.execute(query)
+        results = cursor.fetchall()
+        return [row[0] for row in results]
+def get_all_name_lop():
+        connection = create_connection()
+        cursor = connection.cursor()
+        query = "SELECT idLop FROM lop"
+        cursor.execute(query)
+        results = cursor.fetchall()
+        return [row[0] for row in results]
+def get_all_name_Phong():
+        connection = create_connection()
+        cursor = connection.cursor()
+        query = "SELECT idPhong FROM phonghoc"
+        cursor.execute(query)
+        results = cursor.fetchall()
+        return [row[0] for row in results]
+def get_all_name_GV():
+        connection = create_connection()
+        cursor = connection.cursor()
+        query = "SELECT idGiangVien FROM giangvien"
+        cursor.execute(query)
+        results = cursor.fetchall()
+        return [row[0] for row in results]
+def get_all_name_Mon():
+        connection = create_connection()
+        cursor = connection.cursor()
+        query = "SELECT idMon FROM monhoc"
+        cursor.execute(query)
+        results = cursor.fetchall()
+        return [row[0] for row in results]
 # thêm, sửa, xóa, tìm kiếm hiển thị bảng Phòng học
 def load_data():
     connection = create_connection()
@@ -370,9 +419,189 @@ def search_GV(ten_GV):
         result = cursor.fetchall()
 
         return result
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng Giảng viên
+def load_dataCSVC():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = """SELECT 
+                    ctcosovatchat.stt, 
+                    ctcosovatchat.id, 
+                    cosovatchat.ten, 
+                    ctcosovatchat.idPhong, 
+                    phonghoc.tenPhong, 
+                    ctcosovatchat.SoLuongTot, 
+                    ctcosovatchat.SoLuongXau 
+                FROM 
+                    ctcosovatchat 
+                JOIN 
+                    cosovatchat ON ctcosovatchat.id = cosovatchat.id 
+                JOIN 
+                    phonghoc ON ctcosovatchat.idPhong = phonghoc.idPhong"""
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def add_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
 
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM ctcosovatchat WHERE id = %s"
+    cursor.execute(query_check, (id_CSVC,))
+    if cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
 
+    query_insert = "INSERT INTO ctcosovatchat (id, idPhong, SoLuongTot, SoLuongXau ) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query_insert, (id_CSVC, id_Phong, SoLuongTot, SoLuongXau))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True
+def update_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    query_check = "SELECT * FROM ctcosovatchat WHERE id = %s"
+    cursor.execute(query_check, (id_CSVC,))
+    if not cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
+
+    query_update = "UPDATE ctcosovatchat SET  SoLuongTot = %s, SoLuongXau = %s WHERE id = %s AND idPhong = %s"  
+    cursor.execute(query_update, (SoLuongTot, SoLuongXau, id_CSVC, id_Phong))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True 
+def delete_CSVC(stt):
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        query = "DELETE FROM ctcosovatchat WHERE stt = %s"
+        cursor.execute(query, (stt,))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return True
+def search_CSVC(ten_Phong):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = """SELECT 
+                    ctcosovatchat.stt, 
+                    ctcosovatchat.id, 
+                    cosovatchat.ten, 
+                    ctcosovatchat.idPhong, 
+                    phonghoc.tenPhong, 
+                    ctcosovatchat.SoLuongTot, 
+                    ctcosovatchat.SoLuongXau 
+                FROM 
+                    ctcosovatchat 
+                JOIN 
+                    cosovatchat ON ctcosovatchat.id = cosovatchat.id 
+                JOIN 
+                    phonghoc ON ctcosovatchat.idPhong = phonghoc.idPhong
+                WHERE phonghoc.tenphong LIKE %s    
+                    """
+        cursor.execute(query, (f"%{ten_Phong}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng xếp lịch
+def load_dataXeplich():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = """SELECT 
+                    id,
+                    idKhoa,
+                    idLop,
+                    idGV,
+                    idMon,
+                    idPhong,
+                    Date,
+                    ThoiGian,
+                    tinhTrang
+                FROM 
+                    xeplich 
+                    """
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def add_Xeplich(ten_Phong, ten_Khoa, ten_Mon, ten_GV, ten_Lop, ngay, thoigian, tinhTrang):
+
+    connection = create_connection()
+    cursor = connection.cursor() 
+
+    query_insert = "INSERT INTO xeplich (idKhoa, idLop, idGV, idMon, idPhong, Date, ThoiGian, tinhTrang ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(query_insert, (ten_Khoa, ten_Lop, ten_GV, ten_Mon, ten_Phong, ngay, thoigian, tinhTrang))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True
+def update_Xeplich(id, ten_Phong, ten_Khoa, ten_Mon, ten_GV, ten_Lop, ngay, thoigian, tinhTrang):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    query_update = """UPDATE xeplich SET  idKhoa = %s, idLop = %s, 
+    idGV = %s, idMon = %s, idPhong = %s, Date = %s, ThoiGian = %s, TinhTrang = %s
+    WHERE id = %s"""  
+    cursor.execute(query_update, (ten_Khoa, ten_Lop, ten_GV, ten_Mon, ten_Phong, ngay, thoigian, tinhTrang, id))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True 
+def delete_Xeplich(id):
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        query = "DELETE FROM xeplich WHERE id = %s"
+        cursor.execute(query, (id,))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return True
+def search_Xeplich(tinhTrang):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = """SELECT 
+                    id,
+                    idKhoa,
+                    idLop,
+                    idGV,
+                    idMon,
+                    idPhong,
+                    Date,
+                    ThoiGian,
+                    tinhTrang
+                FROM 
+                    xeplich 
+                WHERE tinhTrang LIKE %s    
+                    """
+        cursor.execute(query, (f"%{tinhTrang}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
 
 
 
