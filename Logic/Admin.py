@@ -105,6 +105,9 @@ class Ui_Dialog(object):
 
         # Kết nối sự kiện click nút Thêm
         self.btnAddPH.clicked.connect(self.handleAddPH)
+        self.btnUpdatePH.clicked.connect(self.handleUpdatePH)
+        self.btnDeletePH.clicked.connect(self.handleDeletePH)
+        self.treeWidgetPH.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -157,6 +160,69 @@ class Ui_Dialog(object):
         self.txtIDPhong.clear()
         self.txtTenPhong.clear()
         
+
+        # Hàm xử lý khi chọn dòng trong treeViewPH
+    def handleSelectionChanged(self):
+        selected_items = self.treeWidgetPH.selectedItems()
+        if selected_items:
+                item = selected_items[0]
+                id_phong = item.text(0)  # Lấy ID Phòng từ cột 0
+                ten_phong = item.text(1)  # Lấy Tên Phòng từ cột 1
+
+                # Hiển thị dữ liệu lên các ô input
+                self.txtIDPhong.setText(id_phong)
+                self.txtTenPhong.setText(ten_phong)
+
+        # Hàm xử lý khi nhấn nút Sửa
+    def handleUpdatePH(self):
+        id_phong = self.txtIDPhong.text().strip()
+        ten_phong = self.txtTenPhong.text().strip()
+
+        if not id_phong or not ten_phong:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn phòng học để sửa!")
+                return
+
+        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
+        if database.update_phong(id_phong, ten_phong):
+                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật phòng học thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+                self.loadDataToTreeWidget()
+
+                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+                self.txtIDPhong.clear()
+                self.txtTenPhong.clear()
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
+
+    def handleDeletePH(self):
+        # Lấy dòng được chọn trong treeWidgetPH
+        selected_items = self.treeWidgetPH.selectedItems()
+
+        if not selected_items:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
+                return
+
+    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
+        id_phong = selected_items[0].text(0)
+
+    # Hiển thị hộp thoại xác nhận xóa
+        reply = QMessageBox.question(self.treeWidgetPH, 'Xác nhận xóa', 
+                f'Bạn có chắc chắn muốn xóa phòng có ID {id_phong}?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                QMessageBox.StandardButton.No)
+
+        if reply == QMessageBox.StandardButton.Yes:
+        # Gọi hàm xóa dữ liệu từ cơ sở dữ liệu
+                if database.delete_phong(id_phong):
+            # Xóa thành công, cập nhật lại treeWidgetPH
+                        self.loadDataToTreeWidget()
+                        QMessageBox.information(self.treeWidgetPH, 'Thông báo', 'Xóa phòng thành công!')
+        else:
+            QMessageBox.critical(self.treeWidgetPH, 'Lỗi', 'Không thể xóa phòng này!')
+
+
+
 
     def checkSession(self, Dialog):
         if 'username' not in self.session:

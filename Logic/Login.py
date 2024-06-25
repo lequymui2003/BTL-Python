@@ -152,7 +152,6 @@ class Ui_MainWindow(object):
         connection.close()
 
 
-    # Hàm mã hóa mật khẩu
     def hash_password(self, password):
         return hashlib.sha256(password.encode()).hexdigest()
 
