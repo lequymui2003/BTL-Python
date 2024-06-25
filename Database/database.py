@@ -186,4 +186,32 @@ def add_LH(id_lop, ten_lop, id_khoa):
     connection.close()
 
     return True
+def update_LH(id_lop, ten_lop, id_khoa):
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM lop WHERE idLop = %s"
+    cursor.execute(query_check, (id_lop,))
+    if not cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
+
+    query_update = "UPDATE lop SET tenLop = %s, idKhoa = %s WHERE idLop = %s"
+    cursor.execute(query_update, (ten_lop, id_khoa, id_lop))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True 
+def delete_LH(id_Lop):
+        connection = create_connection()
+        cursor = connection.cursor()
+
+        query = "DELETE FROM lop WHERE idlop = %s"
+        cursor.execute(query, (id_Lop,))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
+        return True

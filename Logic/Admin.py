@@ -277,11 +277,11 @@ class Ui_Dialog(object):
 
         #gán sự kiện cho bảng môn học
         self.btnAddLophoc.clicked.connect(self.handleAddLH)
-        #self.btnUpdateLH.clicked.connect(self.handleUpdateLH)
-        #self.btnDeleteLH.clicked.connect(self.handleDeleteLH)
+        self.btnUpdateLH.clicked.connect(self.handleUpdateLH)
+        self.btnDeleteLH.clicked.connect(self.handleDeleteLH)
         #self.txtSearchLophoc.textChanged.connect(self.handleInputChangedLH)
         #self.btSearchLophoc.clicked.connect(self.handleSearchLH)
-        #self.treeWidgetLH.itemSelectionChanged.connect(self.handleSelectionChanged)
+        self.treeWidgetLH.itemSelectionChanged.connect(self.handleSelectionChanged)
 
 
     def retranslateUi(self, Dialog):
@@ -371,6 +371,7 @@ class Ui_Dialog(object):
     def handleSelectionChanged(self):
         selected_items = self.treeWidgetPH.selectedItems()
         selected_itemsMH = self.treeWidgetMH.selectedItems()
+        selected_itemsLH = self.treeWidgetLH.selectedItems()
         if selected_items:
                 item = selected_items[0]
                 id_phong = item.text(0)  # Lấy ID Phòng từ cột 0
@@ -389,6 +390,14 @@ class Ui_Dialog(object):
              self.txtTenMon.setText(ten_mon)
              self.txtSoTinChi.setText(so_tin_chi)
              self.cbBoxIDKhoa_Monhoc.setCurrentText(id_Khoa)
+        if selected_itemsLH:
+             item = selected_itemsLH[0]
+             id_lop = item.text(0)
+             ten_lop = item.text(1)
+             id_Khoa = item.text(2)
+             self.txtIDLop.setText(id_lop)
+             self.txtIDTenLop.setText(ten_lop)
+             self.cbBoxIDKhoa_Lophoc.setCurrentText(id_Khoa)
         # Hàm xử lý khi nhấn nút Sửa
     def handleUpdatePH(self):
         id_phong = self.txtIDPhong.text().strip()
@@ -511,12 +520,12 @@ class Ui_Dialog(object):
 
 
         if not id_mon or not ten_mon or not so_tin_chi or not id_khoa:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn phòng học để sửa!")
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn môn học để sửa!")
                 return
 
         # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
         if database.update_MH(id_mon, ten_mon, so_tin_chi, id_khoa):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật phòng học thành công!")
+                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật môn học thành công!")
 
                 # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
                 self.loadDataToTreeWidgetMH()
@@ -526,7 +535,7 @@ class Ui_Dialog(object):
                 self.txtTenMon.clear()
                 self.txtSoTinChi.clear()
         else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
+                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật môn học thất bại!")
     def handleDeleteMH(self):
         # Lấy dòng được chọn trong treeWidgetPH
         selected_items = self.treeWidgetMH.selectedItems()
@@ -540,7 +549,7 @@ class Ui_Dialog(object):
 
     # Hiển thị hộp thoại xác nhận xóa
         reply = QMessageBox.question(self.treeWidgetMH, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa phòng có ID {id_mon}?',
+                f'Bạn có chắc chắn muốn xóa môn học có ID {id_mon}?',
                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
                 QMessageBox.StandardButton.No)
 
@@ -549,9 +558,9 @@ class Ui_Dialog(object):
                 if database.delete_MH(id_mon):
             # Xóa thành công, cập nhật lại treeWidgetPH
                         self.loadDataToTreeWidgetMH()
-                        QMessageBox.information(self.treeWidgetPH, 'Thông báo', 'Xóa phòng thành công!')
+                        QMessageBox.information(self.treeWidgetMH, 'Thông báo', 'Xóa môn học thành công!')
         else:
-            QMessageBox.critical(self.treeWidgetPH, 'Lỗi', 'Không thể xóa phòng này!')
+            QMessageBox.critical(self.treeWidgetMH, 'Lỗi', 'Không thể xóa môn học này!')
     def handleSearchMH(self):
         # Lấy nội dung từ ô input tìm kiếm
         ten_MH = self.txtSearchMonhoc.text().strip()
@@ -618,8 +627,53 @@ class Ui_Dialog(object):
             # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
         self.txtIDLop.clear()
         self.txtIDTenLop.clear()
+    def handleUpdateLH(self):
+        id_lop = self.txtIDLop.text().strip()
+        ten_lop = self.txtIDTenLop.text().strip()
+        id_khoa = self.cbBoxIDKhoa_Lophoc.currentText().strip()
 
 
+        if not id_lop or not ten_lop or not id_khoa:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn lớp học để sửa!")
+                return
+
+        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
+        if database.update_LH(id_lop, ten_lop, id_khoa):
+                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật lớp học thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+                self.loadDataToTreeWidgetLH()
+
+                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+                self.txtIDLop.clear()
+                self.txtIDTenLop.clear()
+        else:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
+    def handleDeleteLH(self):
+        # Lấy dòng được chọn trong treeWidgetPH
+        selected_items = self.treeWidgetLH.selectedItems()
+
+        if not selected_items:
+                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
+                return
+
+    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
+        id_Lop = selected_items[0].text(0)
+
+    # Hiển thị hộp thoại xác nhận xóa
+        reply = QMessageBox.question(self.treeWidgetLH, 'Xác nhận xóa', 
+                f'Bạn có chắc chắn muốn xóa phòng có ID {id_Lop}?',
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
+                QMessageBox.StandardButton.No)
+
+        if reply == QMessageBox.StandardButton.Yes:
+
+                if database.delete_LH(id_Lop):
+           
+                        self.loadDataToTreeWidgetLH()
+                        QMessageBox.information(self.treeWidgetLH, 'Thông báo', 'Xóa lớp học thành công!')
+        else:
+            QMessageBox.critical(self.treeWidgetLH, 'Lỗi', 'Không thể xóa lớp học này!')
 
 
 
