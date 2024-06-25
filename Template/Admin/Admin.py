@@ -247,9 +247,72 @@ class Ui_Dialog(object):
 "color: rgb(255, 255, 255);")
         self.btnDeleteLH.setObjectName("btnDeleteLH")
         self.tabWidget.addTab(self.tab_2, "")
+        self.tab_4 = QtWidgets.QWidget()
+        self.tab_4.setObjectName("tab_4")
+        self.label_10 = QtWidgets.QLabel(parent=self.tab_4)
+        self.label_10.setGeometry(QtCore.QRect(10, 20, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.label_11 = QtWidgets.QLabel(parent=self.tab_4)
+        self.label_11.setGeometry(QtCore.QRect(390, 20, 81, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.txtIDKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtIDKhoa.setGeometry(QtCore.QRect(90, 20, 181, 31))
+        self.txtIDKhoa.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDKhoa.setAutoFillBackground(False)
+        self.txtIDKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDKhoa.setObjectName("txtIDKhoa")
+        self.txtTenKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtTenKhoa.setGeometry(QtCore.QRect(480, 20, 181, 31))
+        self.txtTenKhoa.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtTenKhoa.setAutoFillBackground(False)
+        self.txtTenKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenKhoa.setObjectName("txtTenKhoa")
+        self.treeWidgetKhoa = QtWidgets.QTreeWidget(parent=self.tab_4)
+        self.treeWidgetKhoa.setGeometry(QtCore.QRect(0, 170, 1021, 321))
+        self.treeWidgetKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.treeWidgetKhoa.setObjectName("treeWidgetKhoa")
+        self.txtSearchKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtSearchKhoa.setGeometry(QtCore.QRect(1050, 20, 171, 31))
+        self.txtSearchKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSearchKhoa.setObjectName("txtSearchKhoa")
+        self.btSearchKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btSearchKhoa.setGeometry(QtCore.QRect(1080, 70, 121, 41))
+        self.btSearchKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btSearchKhoa.setObjectName("btSearchKhoa")
+        self.btnAddKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnAddKhoa.setGeometry(QtCore.QRect(1080, 170, 121, 41))
+        self.btnAddKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnAddKhoa.setObjectName("btnAddKhoa")
+        self.btnUpdateKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnUpdateKhoa.setGeometry(QtCore.QRect(1080, 250, 121, 41))
+        self.btnUpdateKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnUpdateKhoa.setObjectName("btnUpdateKhoa")
+        self.btnDeleteKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnDeleteKhoa.setGeometry(QtCore.QRect(1080, 330, 121, 41))
+        self.btnDeleteKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnDeleteKhoa.setObjectName("btnDeleteKhoa")
+        self.tabWidget.addTab(self.tab_4, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -289,6 +352,15 @@ class Ui_Dialog(object):
         self.btnUpdateLH.setText(_translate("Dialog", "Sửa"))
         self.btnDeleteLH.setText(_translate("Dialog", "Xóa"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Lớp học"))
+        self.label_10.setText(_translate("Dialog", "ID Khoa:"))
+        self.label_11.setText(_translate("Dialog", "Tên Khoa:"))
+        self.treeWidgetKhoa.headerItem().setText(0, _translate("Dialog", "ID Khoa"))
+        self.treeWidgetKhoa.headerItem().setText(1, _translate("Dialog", "Tên Khoa"))
+        self.btSearchKhoa.setText(_translate("Dialog", "Tìm kiếm"))
+        self.btnAddKhoa.setText(_translate("Dialog", "Thêm"))
+        self.btnUpdateKhoa.setText(_translate("Dialog", "Sửa"))
+        self.btnDeleteKhoa.setText(_translate("Dialog", "Xóa"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Dialog", "Khoa"))
 
 
 if __name__ == "__main__":

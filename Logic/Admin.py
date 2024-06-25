@@ -247,15 +247,79 @@ class Ui_Dialog(object):
 "color: rgb(255, 255, 255);")
         self.btnDeleteLH.setObjectName("btnDeleteLH")
         self.tabWidget.addTab(self.tab_2, "")
+        self.tab_4 = QtWidgets.QWidget()
+        self.tab_4.setObjectName("tab_4")
+        self.label_10 = QtWidgets.QLabel(parent=self.tab_4)
+        self.label_10.setGeometry(QtCore.QRect(10, 20, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_10.setFont(font)
+        self.label_10.setObjectName("label_10")
+        self.label_11 = QtWidgets.QLabel(parent=self.tab_4)
+        self.label_11.setGeometry(QtCore.QRect(390, 20, 81, 31))
+        font = QtGui.QFont()
+        font.setPointSize(9)
+        self.label_11.setFont(font)
+        self.label_11.setObjectName("label_11")
+        self.txtIDKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtIDKhoa.setGeometry(QtCore.QRect(90, 20, 181, 31))
+        self.txtIDKhoa.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtIDKhoa.setAutoFillBackground(False)
+        self.txtIDKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtIDKhoa.setObjectName("txtIDKhoa")
+        self.txtTenKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtTenKhoa.setGeometry(QtCore.QRect(480, 20, 181, 31))
+        self.txtTenKhoa.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
+        self.txtTenKhoa.setAutoFillBackground(False)
+        self.txtTenKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenKhoa.setObjectName("txtTenKhoa")
+        self.treeWidgetKhoa = QtWidgets.QTreeWidget(parent=self.tab_4)
+        self.treeWidgetKhoa.setGeometry(QtCore.QRect(0, 170, 1021, 321))
+        self.treeWidgetKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.treeWidgetKhoa.setObjectName("treeWidgetKhoa")
+        self.txtSearchKhoa = QtWidgets.QLineEdit(parent=self.tab_4)
+        self.txtSearchKhoa.setGeometry(QtCore.QRect(1050, 20, 171, 31))
+        self.txtSearchKhoa.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
+"color: black; /* Màu chữ đen */\n"
+"border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtSearchKhoa.setObjectName("txtSearchKhoa")
+        self.btSearchKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btSearchKhoa.setGeometry(QtCore.QRect(1080, 70, 121, 41))
+        self.btSearchKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btSearchKhoa.setObjectName("btSearchKhoa")
+        self.btnAddKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnAddKhoa.setGeometry(QtCore.QRect(1080, 170, 121, 41))
+        self.btnAddKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnAddKhoa.setObjectName("btnAddKhoa")
+        self.btnUpdateKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnUpdateKhoa.setGeometry(QtCore.QRect(1080, 250, 121, 41))
+        self.btnUpdateKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnUpdateKhoa.setObjectName("btnUpdateKhoa")
+        self.btnDeleteKhoa = QtWidgets.QPushButton(parent=self.tab_4)
+        self.btnDeleteKhoa.setGeometry(QtCore.QRect(1080, 330, 121, 41))
+        self.btnDeleteKhoa.setStyleSheet("background-color: rgb(0, 0, 127);\n"
+"color: rgb(255, 255, 255);")
+        self.btnDeleteKhoa.setObjectName("btnDeleteKhoa")
+        self.tabWidget.addTab(self.tab_4, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         # Load dữ liệu từ MySQL vào treeWidgetPH
         self.loadDataToTreeWidget()
         self.loadDataToTreeWidgetMH()
         self.loadDataToTreeWidgetLH()
+        self.loadDataToTreeWidgetKhoa()
         self.load_id_khoa()
 
         # gán sự kiện click bảng phòng học
@@ -283,6 +347,13 @@ class Ui_Dialog(object):
         self.btSearchLophoc.clicked.connect(self.handleSearchLH)
         self.treeWidgetLH.itemSelectionChanged.connect(self.handleSelectionChanged)
 
+        #gán sự kiện cho bảng khoa
+        self.btnAddKhoa.clicked.connect(self.handleAddKhoa)
+        #self.btnUpdateKhoa.clicked.connect(self.handleUpdateKhoa)
+        #self.btnDeleteKhoa.clicked.connect(self.handleDeleteKhoa)
+        #self.txtSearchKhoa.textChanged.connect(self.handleInputChangedKhoa)
+        #self.btSearchKhoa.clicked.connect(self.handleSearchKhoa)
+        #self.treeWidgetKhoa.itemSelectionChanged.connect(self.handleSelectionChanged)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
@@ -321,10 +392,17 @@ class Ui_Dialog(object):
         self.btnUpdateLH.setText(_translate("Dialog", "Sửa"))
         self.btnDeleteLH.setText(_translate("Dialog", "Xóa"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Dialog", "Lớp học"))
-# hàm load id khoa cho vào comboBox
+        self.label_10.setText(_translate("Dialog", "ID Khoa:"))
+        self.label_11.setText(_translate("Dialog", "Tên Khoa:"))
+        self.treeWidgetKhoa.headerItem().setText(0, _translate("Dialog", "ID Khoa"))
+        self.treeWidgetKhoa.headerItem().setText(1, _translate("Dialog", "Tên Khoa"))
+        self.btSearchKhoa.setText(_translate("Dialog", "Tìm kiếm"))
+        self.btnAddKhoa.setText(_translate("Dialog", "Thêm"))
+        self.btnUpdateKhoa.setText(_translate("Dialog", "Sửa"))
+        self.btnDeleteKhoa.setText(_translate("Dialog", "Xóa"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("Dialog", "Khoa"))
     def load_id_khoa(self):
         id_khoa_list = database.get_all_id_khoa()
-
         self.cbBoxIDKhoa_Monhoc.addItems(id_khoa_list)
         self.cbBoxIDKhoa_Lophoc.addItems(id_khoa_list)
 # thêm, sửa, xóa, tìm kiếm hiển thị bảng Phòng học
@@ -698,6 +776,49 @@ class Ui_Dialog(object):
         if not text:
         # Nếu ô input rỗng, load lại dữ liệu ban đầu
                 self.loadDataToTreeWidgetLH()
+
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng khoa
+    def loadDataToTreeWidgetKhoa(self):
+        # Lấy dữ liệu từ cơ sở dữ liệu
+        data = database.load_dataKhoa()
+
+        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
+        self.treeWidgetKhoa.clear()
+
+        for row in data:
+            parent_item = QTreeWidgetItem()
+            parent_item.setText(0, str(row[0]))  
+            parent_item.setText(1, row[1])      
+
+            self.treeWidgetKhoa.addTopLevelItem(parent_item)
+    def handleAddKhoa(self):
+        id_khoa = self.txtIDKhoa.text().strip()
+        ten_Khoa = self.txtTenKhoa.text().strip()
+        
+
+        if not id_khoa or not ten_Khoa:
+            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
+            return
+
+        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
+        if not database.add_Khoa(id_khoa, ten_Khoa):
+            QMessageBox.warning(self.tab_3, "Thông báo", "ID Khoa hoặc Tên khoa đã tồn tại!")
+            self.txtIDKhoa.clear()
+            self.txtTenKhoa.clear()
+            return
+       
+                # Nếu không có lỗi, hiển thị thông báo thành công
+        QMessageBox.information(self.tab_3, "Thông báo", "Thêm lớp học thành công!")
+
+                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
+        self.loadDataToTreeWidgetKhoa()
+
+            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
+        self.txtIDKhoa.clear()
+        self.txtTenKhoa.clear()
+
+
+
 
 
     def checkSession(self, Dialog):

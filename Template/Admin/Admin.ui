@@ -41,7 +41,7 @@ color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -713,6 +713,197 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btnDeleteLH">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>330</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Xóa</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_4">
+    <attribute name="title">
+     <string>Khoa</string>
+    </attribute>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>ID Khoa:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_11">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>20</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Tên Khoa:</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtIDKhoa">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>20</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtTenKhoa">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>20</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="autoFillBackground">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetKhoa">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>170</y>
+       <width>1021</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>ID Khoa</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên Khoa</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="txtSearchKhoa">
+     <property name="geometry">
+      <rect>
+       <x>1050</x>
+       <y>20</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btSearchKhoa">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>70</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tìm kiếm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnAddKhoa">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>170</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Thêm</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnUpdateKhoa">
+     <property name="geometry">
+      <rect>
+       <x>1080</x>
+       <y>250</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Sửa</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnDeleteKhoa">
      <property name="geometry">
       <rect>
        <x>1080</x>

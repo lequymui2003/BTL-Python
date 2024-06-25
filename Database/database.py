@@ -228,9 +228,35 @@ def search_LH(ten_lop):
         result = cursor.fetchall()
 
         return result
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng Khoa
+def load_dataKhoa():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = "SELECT * FROM khoa"
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def add_Khoa(id_khoa, ten_Khoa):
 
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query_check = "SELECT * FROM khoa WHERE idKhoa = %s OR tenKhoa = %s"
+    cursor.execute(query_check, (id_khoa, ten_Khoa))
+    if cursor.fetchone():
+        cursor.close()
+        connection.close()
+        return False  
 
+    query_insert = "INSERT INTO khoa (idKhoa, tenKhoa) VALUES (%s, %s)"
+    cursor.execute(query_insert, (id_khoa, ten_Khoa))
+    connection.commit()
+    cursor.close()
+    connection.close()
+
+    return True
 
 
 
