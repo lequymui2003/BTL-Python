@@ -447,8 +447,8 @@ def add_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
     connection = create_connection()
     cursor = connection.cursor()
 
-    query_check = "SELECT * FROM ctcosovatchat WHERE id = %s"
-    cursor.execute(query_check, (id_CSVC,))
+    query_check = "SELECT * FROM ctcosovatchat WHERE id = %s AND idPhong = %s"
+    cursor.execute(query_check, (id_CSVC, id_Phong))
     if cursor.fetchone():
         cursor.close()
         connection.close()
@@ -467,7 +467,7 @@ def update_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
 
     query_check = "SELECT * FROM ctcosovatchat WHERE id = %s"
     cursor.execute(query_check, (id_CSVC,))
-    if not cursor.fetchone():
+    if not cursor.fetchall():
         cursor.close()
         connection.close()
         return False  

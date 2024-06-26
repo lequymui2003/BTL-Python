@@ -4,7 +4,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from PyQt6.QtWidgets import QMessageBox, QDialog, QTreeWidget, QTreeWidgetItem, QLineEdit, QPushButton
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
 from Database import database  # Import từ module database
-
+from database_operations import *
 
 class Ui_Dialog(object):
     def __init__(self, session):
@@ -438,7 +438,7 @@ class Ui_Dialog(object):
         self.label_20.setFont(font)
         self.label_20.setObjectName("label_20")
         self.label_21 = QtWidgets.QLabel(parent=self.tab_6)
-        self.label_21.setGeometry(QtCore.QRect(680, 70, 101, 31))
+        self.label_21.setGeometry(QtCore.QRect(680, 70, 131, 31))
         font = QtGui.QFont()
         font.setPointSize(9)
         self.label_21.setFont(font)
@@ -456,6 +456,7 @@ class Ui_Dialog(object):
         self.txtTenCosovatchat.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
 "color: black; /* Màu chữ đen */\n"
 "border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenCosovatchat.setReadOnly(True)
         self.txtTenCosovatchat.setObjectName("txtTenCosovatchat")
         self.cbBoxIDPhong_csvc = QtWidgets.QComboBox(parent=self.tab_6)
         self.cbBoxIDPhong_csvc.setGeometry(QtCore.QRect(470, 20, 181, 31))
@@ -470,9 +471,10 @@ class Ui_Dialog(object):
         self.txtTenPhong_csvc.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
 "color: black; /* Màu chữ đen */\n"
 "border: 1px solid #cccccc; /* Viền màu xám */")
+        self.txtTenPhong_csvc.setReadOnly(True)
         self.txtTenPhong_csvc.setObjectName("txtTenPhong_csvc")
         self.txtSoLuongTot = QtWidgets.QLineEdit(parent=self.tab_6)
-        self.txtSoLuongTot.setGeometry(QtCore.QRect(790, 20, 171, 31))
+        self.txtSoLuongTot.setGeometry(QtCore.QRect(820, 20, 171, 31))
         self.txtSoLuongTot.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.txtSoLuongTot.setAutoFillBackground(False)
         self.txtSoLuongTot.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
@@ -480,7 +482,7 @@ class Ui_Dialog(object):
 "border: 1px solid #cccccc; /* Viền màu xám */")
         self.txtSoLuongTot.setObjectName("txtSoLuongTot")
         self.txtSoLuongXau = QtWidgets.QLineEdit(parent=self.tab_6)
-        self.txtSoLuongXau.setGeometry(QtCore.QRect(790, 70, 171, 31))
+        self.txtSoLuongXau.setGeometry(QtCore.QRect(820, 70, 171, 31))
         self.txtSoLuongXau.setLayoutDirection(QtCore.Qt.LayoutDirection.LeftToRight)
         self.txtSoLuongXau.setAutoFillBackground(False)
         self.txtSoLuongXau.setStyleSheet("background-color: #f0f0f0; /* Màu nền xám nhạt */\n"
@@ -659,7 +661,7 @@ class Ui_Dialog(object):
         self.tabWidget.addTab(self.tab_7, "")
 
         self.retranslateUi(Dialog)
-        self.tabWidget.setCurrentIndex(6)
+        self.tabWidget.setCurrentIndex(5)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
         self.checkSession(Dialog)
@@ -667,7 +669,7 @@ class Ui_Dialog(object):
 
 
         # Load dữ liệu từ MySQL vào treeWidgetPH
-        self.loadDataToTreeWidget()
+        self.loadDataToTreeWidgetPH()
         self.loadDataToTreeWidgetMH()
         self.loadDataToTreeWidgetLH()
         self.loadDataToTreeWidgetKhoa()
@@ -817,13 +819,13 @@ class Ui_Dialog(object):
         self.treeWidgetCSVC.headerItem().setText(3, _translate("Dialog", "ID phòng"))
         self.treeWidgetCSVC.headerItem().setText(4, _translate("Dialog", "Tên phòng"))
         self.treeWidgetCSVC.headerItem().setText(5, _translate("Dialog", "Số lượng tốt"))
-        self.treeWidgetCSVC.headerItem().setText(6, _translate("Dialog", "Số lượng xấu"))
+        self.treeWidgetCSVC.headerItem().setText(6, _translate("Dialog", "Số lượng hư hỏng"))
         self.label_16.setText(_translate("Dialog", "ID cơ sở vật chất:"))
         self.label_17.setText(_translate("Dialog", "Tên cơ sở vật chất:"))
         self.label_18.setText(_translate("Dialog", "ID phòng:"))
         self.label_19.setText(_translate("Dialog", "Tên phòng:"))
         self.label_20.setText(_translate("Dialog", "Số lượng tốt:"))
-        self.label_21.setText(_translate("Dialog", "Số lượng xấu:"))
+        self.label_21.setText(_translate("Dialog", "Số lượng hư hỏng:"))
         self.btSearchCSVC.setText(_translate("Dialog", "Tìm kiếm"))
         self.btnAddCSVC.setText(_translate("Dialog", "Thêm"))
         self.btnUpdateCSVC.setText(_translate("Dialog", "Sửa"))
@@ -896,47 +898,6 @@ class Ui_Dialog(object):
     def load_name_Mon(self):
         name_Mon_list = database.get_all_name_Mon()
         self.cbBoxtenMon_xeplich.addItems(name_Mon_list)
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng Phòng học
-    def loadDataToTreeWidget(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_data()
-
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetPH.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  # Cột 0 là ID Phòng
-            parent_item.setText(1, row[1])       # Cột 1 là Tên Phòng
-
-            self.treeWidgetPH.addTopLevelItem(parent_item)
-    def handleAddPH(self):
-        id_phong = self.txtIDPhong.text().strip()
-        ten_phong = self.txtTenPhong.text().strip()
-
-        if not id_phong or not ten_phong:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_phong(id_phong, ten_phong):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID phòng hoặc Tên phòng đã tồn tại!")
-            self.txtIDPhong.clear()
-            self.txtTenPhong.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm phòng học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeView()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtIDPhong.clear()
-        self.txtTenPhong.clear()
-        
-
-        # Hàm xử lý khi chọn dòng trong treeViewPH
     def handleSelectionChanged(self):
         selected_items = self.treeWidgetPH.selectedItems()
         selected_itemsMH = self.treeWidgetMH.selectedItems()
@@ -1021,802 +982,157 @@ class Ui_Dialog(object):
               self.txtNgay.setText(date)
               self.cbBoxTG.setCurrentText(thoigian)
               self.cbBoxTinhTrang.setCurrentText(tinhTrang)
-        # Hàm xử lý khi nhấn nút Sửa
-    def handleUpdatePH(self):
-        id_phong = self.txtIDPhong.text().strip()
-        ten_phong = self.txtTenPhong.text().strip()
 
-        if not id_phong or not ten_phong:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn phòng học để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_phong(id_phong, ten_phong):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật phòng học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidget()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtIDPhong.clear()
-                self.txtTenPhong.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
-    def handleDeletePH(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetPH.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id_phong = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetPH, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa phòng có ID {id_phong}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-        # Gọi hàm xóa dữ liệu từ cơ sở dữ liệu
-                if database.delete_phong(id_phong):
-            # Xóa thành công, cập nhật lại treeWidgetPH
-                        self.loadDataToTreeWidget()
-                        QMessageBox.information(self.treeWidgetPH, 'Thông báo', 'Xóa phòng thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetPH, 'Lỗi', 'Không thể xóa phòng này!')
-    def handleSearch(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_phong = self.txtSearchPH.text().strip()
-
-        if ten_phong:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                phong_list = database.search_phong(ten_phong)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetPH.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for phong in phong_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetPH)
-                        item.setText(0, str(phong[0]))  # Giả sử cột 0 là ID_Phong
-                        item.setText(1, phong[1])  # Giả sử cột 1 là Ten_Phong
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên phòng học để tìm kiếm!")
-    def handleInputChanged(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidget()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng môn học
-    def loadDataToTreeWidgetMH(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_data_monhoc()
-
-       
-        self.treeWidgetMH.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))
-            parent_item.setText(1, str(row[1]))  
-            parent_item.setText(2, str(row[2])) 
-            parent_item.setText(3, row[3]) 
-
-            self.treeWidgetMH.addTopLevelItem(parent_item)
-    def handleAddMH(self):
-        id_mon = self.txtIDMon.text().strip()
-        ten_mon = self.txtTenMon.text().strip()
-        so_tin_chi = self.txtSoTinChi.text().strip()
-        id_khoa = self.cbBoxIDKhoa_Monhoc.currentText().strip()
-
-        if not id_mon or not ten_mon or not so_tin_chi or not id_khoa:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_monhoc(id_mon, ten_mon, so_tin_chi, id_khoa):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID môn hoặc Tên môn đã tồn tại!")
-            self.txtIDMon.clear()
-            self.txtTenMon.clear()
-            self.txtSoTinChi.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm môn học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeWidgetMH()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtIDMon.clear()
-        self.txtTenMon.clear()
-        self.txtSoTinChi.clear()
-    def handleUpdateMH(self):
-        id_mon = self.txtIDMon.text().strip()
-        ten_mon = self.txtTenMon.text().strip()
-        so_tin_chi = self.txtSoTinChi.text().strip()
-        id_khoa = self.cbBoxIDKhoa_Monhoc.currentText().strip()
-
-
-        if not id_mon or not ten_mon or not so_tin_chi or not id_khoa:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn môn học để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_MH(id_mon, ten_mon, so_tin_chi, id_khoa):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật môn học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetMH()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtIDMon.clear()
-                self.txtTenMon.clear()
-                self.txtSoTinChi.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật môn học thất bại!")
-    def handleDeleteMH(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetMH.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id_mon = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetMH, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa môn học có ID {id_mon}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-        # Gọi hàm xóa dữ liệu từ cơ sở dữ liệu
-                if database.delete_MH(id_mon):
-            # Xóa thành công, cập nhật lại treeWidgetPH
-                        self.loadDataToTreeWidgetMH()
-                        QMessageBox.information(self.treeWidgetMH, 'Thông báo', 'Xóa môn học thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetMH, 'Lỗi', 'Không thể xóa môn học này!')
-    def handleSearchMH(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_MH = self.txtSearchMonhoc.text().strip()
-
-        if ten_MH:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                mon_list = database.search_MH(ten_MH)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetMH.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for mon in mon_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetMH)
-                        item.setText(0, str(mon[0]))  
-                        item.setText(1, str(mon[1]))  
-                        item.setText(2, str(mon[2])) 
-                        item.setText(3, mon[3])  
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên môn học để tìm kiếm!")
-    def handleInputChangedMH(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetMH()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng lớp học
-    def loadDataToTreeWidgetLH(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_dataLH()
-
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetLH.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  
-            parent_item.setText(1, str(row[1]))      
-            parent_item.setText(2, row[2])          
-
-            self.treeWidgetLH.addTopLevelItem(parent_item)
-    def handleAddLH(self):
-        id_lop = self.txtIDLop.text().strip()
-        ten_lop = self.txtIDTenLop.text().strip()
-        id_khoa = self.cbBoxIDKhoa_Lophoc.currentText().strip()
-
-        if not id_lop or not ten_lop  or not id_khoa:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_LH(id_lop, ten_lop, id_khoa):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID lớp hoặc Tên lớp đã tồn tại!")
-            self.txtIDLop.clear()
-            self.txtIDTenLop.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm lớp học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeWidgetLH()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtIDLop.clear()
-        self.txtIDTenLop.clear()
-    def handleUpdateLH(self):
-        id_lop = self.txtIDLop.text().strip()
-        ten_lop = self.txtIDTenLop.text().strip()
-        id_khoa = self.cbBoxIDKhoa_Lophoc.currentText().strip()
-
-
-        if not id_lop or not ten_lop or not id_khoa:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn lớp học để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_LH(id_lop, ten_lop, id_khoa):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật lớp học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetLH()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtIDLop.clear()
-                self.txtIDTenLop.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật phòng học thất bại!")
-    def handleDeleteLH(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetLH.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id_Lop = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetLH, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa lớp có ID {id_Lop}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-
-                if database.delete_LH(id_Lop):
-           
-                        self.loadDataToTreeWidgetLH()
-                        QMessageBox.information(self.treeWidgetLH, 'Thông báo', 'Xóa lớp học thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetLH, 'Lỗi', 'Không thể xóa lớp học này!')
-    def handleSearchLH(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_lop = self.txtSearchLophoc.text().strip()
-
-        if ten_lop:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                lop_list = database.search_LH(ten_lop)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetLH.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for lop in lop_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetLH)
-                        item.setText(0, str(lop[0]))  
-                        item.setText(1, str(lop[1]))  
-                        item.setText(2, lop[2]) 
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên lớp học để tìm kiếm!")
-    def handleInputChangedLH(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetLH()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng khoa
-    def loadDataToTreeWidgetKhoa(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_dataKhoa()
-
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetKhoa.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  
-            parent_item.setText(1, row[1])      
-
-            self.treeWidgetKhoa.addTopLevelItem(parent_item)
-    def handleAddKhoa(self):
-        id_khoa = self.txtIDKhoa.text().strip()
-        ten_Khoa = self.txtTenKhoa.text().strip()
-        
-
-        if not id_khoa or not ten_Khoa:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_Khoa(id_khoa, ten_Khoa):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID Khoa hoặc Tên khoa đã tồn tại!")
-            self.txtIDKhoa.clear()
-            self.txtTenKhoa.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm lớp học thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeWidgetKhoa()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtIDKhoa.clear()
-        self.txtTenKhoa.clear()
-    def handleUpdateKhoa(self):
-        id_khoa = self.txtIDKhoa.text().strip()
-        ten_khoa = self.txtTenKhoa.text().strip()
-
-
-        if not ten_khoa or not id_khoa:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn khoa để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_Khoa(id_khoa, ten_khoa):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật khoa thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetKhoa()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtIDKhoa.clear()
-                self.txtTenKhoa.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật khoa thất bại!")
-    def handleDeleteKhoa(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetKhoa.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id_Khoa = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetKhoa, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa khoa có ID {id_Khoa}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-
-                if database.delete_Khoa(id_Khoa):
-           
-                        self.loadDataToTreeWidgetKhoa()
-                        QMessageBox.information(self.treeWidgetKhoa, 'Thông báo', 'Xóa khoa thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetKhoa, 'Lỗi', 'Không thể xóa lớp học này!')
-    def handleSearchKhoa(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_Khoa = self.txtSearchKhoa.text().strip()
-
-        if ten_Khoa:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                khoa_list = database.search_Khoa(ten_Khoa)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetKhoa.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for khoa in khoa_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetKhoa)
-                        item.setText(0, str(khoa[0]))  
-                        item.setText(1, khoa[1])  
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên khoa để tìm kiếm!")
-    def handleInputChangedKhoa(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetKhoa()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng giảng viên
-    def loadDataToTreeWidgetGV(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_dataGV()
-
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetGV.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  
-            parent_item.setText(1, str(row[1]))      
-            parent_item.setText(2, str(row[2]))      
-            parent_item.setText(3, row[3])      
-
-            self.treeWidgetGV.addTopLevelItem(parent_item)
-    def handleAddGV(self):
-        id_GV = self.txtIDGiangvien.text().strip()
-        ten_GV = self.txtTenGiangvien.text().strip()
-        sdt = self.txtSDT.text().strip()
-        id_Khoa = self.cbBoxIDKhoa_Giangvien.currentText().strip()
-        
-
-        if not id_GV or not ten_GV or not sdt or not id_Khoa:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_GV(id_GV, ten_GV, sdt, id_Khoa):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID Giảng viên hoặc Tên giảng viên đã tồn tại!")
-            self.txtIDGiangvien.clear()
-            self.txtTenGiangvien.clear()
-            self.txtSDT.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm giảng viên thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeWidgetGV()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtIDGiangvien.clear()
-        self.txtTenGiangvien.clear()
-        self.txtSDT.clear()
-    def handleUpdateGV(self):
-        id_GV = self.txtIDGiangvien.text().strip()
-        ten_GV = self.txtTenGiangvien.text().strip()
-        sdt = self.txtSDT.text().strip()
-        id_Khoa = self.cbBoxIDKhoa_Giangvien.currentText().strip()
-        
-
-
-        if not id_GV or not ten_GV or not sdt or not id_Khoa:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn giảng viên để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_GV(id_GV, ten_GV, sdt, id_Khoa):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật thông tin giảng viên thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetGV()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtIDGiangvien.clear()
-                self.txtTenGiangvien.clear()
-                self.txtSDT.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật khoa thất bại!")
-    def handleDeleteGV(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetGV.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id_GV = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetGV, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa giảng viên có ID {id_GV}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-
-                if database.delete_GV(id_GV):
-           
-                        self.loadDataToTreeWidgetGV()
-                        QMessageBox.information(self.treeWidgetGV, 'Thông báo', 'Xóa giảng viên thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetGV, 'Lỗi', 'Không thể xóa giảng viên này!')
-    def handleSearchGV(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_GV= self.txtSearchKhoa_2.text().strip()
-
-        if ten_GV:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                giangvien_list = database.search_GV(ten_GV)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetGV.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for giangvien in giangvien_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetGV)
-                        item.setText(0, str(giangvien[0]))  
-                        item.setText(1, str(giangvien[1]))  
-                        item.setText(2, str(giangvien[2]))  
-                        item.setText(3, giangvien[3])  
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên giảng viên để tìm kiếm!")
-    def handleInputChangedGV(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetGV()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng cơ sở vật chất
+# Cơ sở vật chất
     def loadDataToTreeWidgetCSVC(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_dataCSVC()
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetCSVC.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  
-            parent_item.setText(1, str(row[1]))      
-            parent_item.setText(2, str(row[2]))      
-            parent_item.setText(3, str(row[3]))      
-            parent_item.setText(4, str(row[4]))      
-            parent_item.setText(5, str(row[5]))      
-            parent_item.setText(6, str(row[6]))      
-
-            self.treeWidgetCSVC.addTopLevelItem(parent_item)
+        loadDataToTreeWidget(self.treeWidgetCSVC, database.load_dataCSVC)
     def handleAddCSVC(self):
-        id_CSVC = self.cbBoxIDcosovatchat.currentText().strip()
-        ten_CSVC = self.txtTenCosovatchat.text().strip()
-        id_Phong = self.cbBoxIDPhong_csvc.currentText().strip()
-        ten_Phong = self.txtTenPhong_csvc.text().strip()
-        SoLuongTot = self.txtSoLuongTot.text().strip()
-        SoLuongXau = self.txtSoLuongXau.text().strip()
-
-        if not id_CSVC or not ten_CSVC or not id_Phong or not ten_Phong or not SoLuongTot or not SoLuongXau:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Thực hiện kiểm tra trước khi thêm phòng học vào cơ sở dữ liệu
-        if not database.add_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
-            QMessageBox.warning(self.tab_3, "Thông báo", "ID cơ sở vật chất hoặc Tên cơ sở vật chất đã tồn tại!")
-            self.txtTenCosovatchat.clear()
-            self.txtTenPhong_csvc.clear()
-            self.txtSoLuongTot.clear()
-            self.txtSoLuongXau.clear()
-            return
-       
-                # Nếu không có lỗi, hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm cơ sở vật chất thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-        self.loadDataToTreeWidgetCSVC()
-
-            # Sau khi thêm thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-        self.txtTenCosovatchat.clear()
-        self.txtTenPhong_csvc.clear()
-        self.txtSoLuongTot.clear()
-        self.txtSoLuongXau.clear()
+        input_widgets = [self.cbBoxIDcosovatchat, self.cbBoxIDPhong_csvc, self.txtSoLuongTot, self.txtSoLuongXau]
+        handleAdd(self.treeWidgetCSVC, database.add_CSVC, database.load_dataCSVC, input_widgets, self.tab_3)
+        self.load_id_csvc()
+        self.load_id_Phonghoc()
     def handleUpdateCSVC(self):
-        id_CSVC = self.cbBoxIDcosovatchat.currentText().strip()
-        ten_CSVC = self.txtTenCosovatchat.text().strip()
-        id_Phong = self.cbBoxIDPhong_csvc.currentText().strip()
-        ten_Phong = self.txtTenPhong_csvc.text().strip()
-        SoLuongTot = self.txtSoLuongTot.text().strip()
-        SoLuongXau = self.txtSoLuongXau.text().strip()
-        
-
-
-        if not id_CSVC or not ten_CSVC or not id_Phong or not ten_Phong or not SoLuongTot or not SoLuongXau:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn cơ sở vật chất để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_CSVC(id_CSVC, id_Phong, SoLuongTot, SoLuongXau):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật thông tin cơ sở vật chất thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetCSVC()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtTenCosovatchat.clear()
-                self.txtTenPhong_csvc.clear()
-                self.txtSoLuongTot.clear()
-                self.txtSoLuongXau.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật cơ sở vật chất thất bại!")
+        input_widgets = [self.cbBoxIDcosovatchat, self.cbBoxIDPhong_csvc, self.txtSoLuongTot, self.txtSoLuongXau]
+        handleUpdate(self.treeWidgetCSVC, database.update_CSVC, database.load_dataCSVC, input_widgets, self.tab_3)
+        self.load_id_csvc()
+        self.load_id_Phonghoc()
     def handleDeleteCSVC(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetCSVC.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        stt = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetCSVC, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa cơ sở vật chất có ID {stt}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-
-                if database.delete_CSVC(stt):
-           
-                        self.loadDataToTreeWidgetCSVC()
-                        QMessageBox.information(self.treeWidgetGV, 'Thông báo', 'Xóa cơ sở vật chất thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetGV, 'Lỗi', 'Không thể xóa cơ sở vật chất này!')
+        handleDelete(self.treeWidgetCSVC, database.delete_CSVC, database.load_dataCSVC, self.tab_3)
+        self.load_id_csvc()
+        self.load_id_Phonghoc()
     def handleSearchCSVC(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        ten_Phong= self.txtSearchCsvc.text().strip()
-
-        if ten_Phong:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                ten_Phong_list = database.search_CSVC(ten_Phong)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetCSVC.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for tenphong in ten_Phong_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetCSVC)
-                        item.setText(0, str(tenphong[0]))  
-                        item.setText(1, str(tenphong[1]))  
-                        item.setText(2, str(tenphong[2]))  
-                        item.setText(3, str(tenphong[3]))  
-                        item.setText(4, str(tenphong[4]))  
-                        item.setText(5, str(tenphong[5]))  
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên giảng viên để tìm kiếm!")
+        handleSearch(self.treeWidgetCSVC, database.search_CSVC, database.load_dataCSVC, self.txtSearchCsvc, self.tab_3)
+        self.load_id_csvc()
+        self.load_id_Phonghoc()
     def handleInputChangedCSVC(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetCSVC()
-
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng xếp lịch
+        handleInputChanged(self.treeWidgetCSVC, database.load_dataCSVC, text)
+# Xếp lịch
     def loadDataToTreeWidgetXeplich(self):
-        # Lấy dữ liệu từ cơ sở dữ liệu
-        data = database.load_dataXeplich()
-        # Xóa dữ liệu cũ trong treeWidgetPH trước khi load lại
-        self.treeWidgetCSVC_2.clear()
-
-        for row in data:
-            parent_item = QTreeWidgetItem()
-            parent_item.setText(0, str(row[0]))  
-            parent_item.setText(1, str(row[1]))      
-            parent_item.setText(2, str(row[2]))      
-            parent_item.setText(3, str(row[3]))      
-            parent_item.setText(4, str(row[4]))      
-            parent_item.setText(5, str(row[5]))      
-            parent_item.setText(6, str(row[6]))      
-            parent_item.setText(7, str(row[7]))         
-            parent_item.setText(8, str(row[8]))         
-
-            self.treeWidgetCSVC_2.addTopLevelItem(parent_item)
+        loadDataToTreeWidget(self.treeWidgetCSVC_2, database.load_dataXeplich)
     def handleAddXeplich(self):
-        # Lấy thông tin từ các widget
-        ten_Phong = self.cbBoxTenPhong_xeplich.currentText().strip()
-        ten_GV = self.cbBoxTenGV_xeplich.currentText().strip()
-        ten_Khoa = self.cbBoxTenKhoa_xeplich.currentText().strip()
-        ten_Mon = self.cbBoxtenMon_xeplich.currentText().strip()
-        ten_Lop = self.cbBoxTenLop_xeplich.currentText().strip()
-        ngay = self.txtNgay.text().strip()
-        thoigian = self.cbBoxTG.currentText().strip()
-        tinhTrang = self.cbBoxTinhTrang.currentText().strip()
-
-        # Kiểm tra xem các thông tin cần thiết đã được nhập đủ hay chưa
-        if not ten_Phong or not ten_GV or not ten_Lop or not ngay or not thoigian or not ten_Khoa or not ten_Mon or not tinhTrang:
-            QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập đầy đủ thông tin!")
-            return
-
-        # Nếu không có lỗi, thực hiện thêm lịch vào cơ sở dữ liệu
-        database.add_Xeplich(ten_Phong, ten_Khoa, ten_Mon, ten_GV, ten_Lop, ngay, thoigian, tinhTrang)
-
-        # Hiển thị thông báo thành công
-        QMessageBox.information(self.tab_3, "Thông báo", "Thêm lịch thành công!")
-
-        # Load lại dữ liệu trên treeViewPH
-        self.loadDataToTreeWidgetXeplich()
+        input_widgets = [self.cbBoxTenPhong_xeplich, self.cbBoxTenKhoa_xeplich, self.cbBoxtenMon_xeplich, self.cbBoxTenGV_xeplich, 
+                         self.cbBoxTenLop_xeplich, self.txtNgay, self.cbBoxTG, self.cbBoxTinhTrang]
+        handleAdd(self.treeWidgetCSVC_2, database.add_Xeplich, database.load_dataXeplich, input_widgets, self.tab_3)
+        self.load_name_Khoa()
+        self.load_name_Lop()
+        self.load_name_GV()
+        self.load_name_Mon()
+        self.load_name_Phong()
     def handleUpdateXeplich(self):
-        id = self.txtIDXeplich.text().strip()
-        ten_Phong = self.cbBoxTenPhong_xeplich.currentText().strip()
-        ten_GV = self.cbBoxTenGV_xeplich.currentText().strip()
-        ten_Khoa = self.cbBoxTenKhoa_xeplich.currentText().strip()
-        ten_Mon = self.cbBoxtenMon_xeplich.currentText().strip()
-        ten_Lop = self.cbBoxTenLop_xeplich.currentText().strip()
-        ngay = self.txtNgay.text().strip()
-        thoigian = self.cbBoxTG.currentText().strip()
-        tinhTrang = self.cbBoxTinhTrang.currentText().strip()
-        
-
-
-        if not ten_Phong or not ten_GV or not ten_Lop or not ngay or not thoigian or not ten_Khoa or not ten_Mon or not tinhTrang:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn cơ sở vật chất để sửa!")
-                return
-
-        # Thực hiện cập nhật phòng học vào cơ sở dữ liệu
-        if database.update_Xeplich( id, ten_Phong, ten_Khoa, ten_Mon, ten_GV, ten_Lop, ngay, thoigian, tinhTrang):
-                QMessageBox.information(self.tab_3, "Thông báo", "Cập nhật thông tin cơ sở vật chất thành công!")
-
-                # Xóa dữ liệu cũ trên treeViewPH và load lại dữ liệu mới từ cơ sở dữ liệu
-                self.loadDataToTreeWidgetXeplich()
-
-                # Sau khi cập nhật thành công, clear các ô input để chuẩn bị nhập dữ liệu mới
-                self.txtNgay.clear()
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Cập nhật cơ sở vật chất thất bại!")
+        input_widgets = [self.txtIDXeplich, self.cbBoxTenPhong_xeplich, self.cbBoxTenKhoa_xeplich, self.cbBoxtenMon_xeplich, self.cbBoxTenGV_xeplich, 
+                         self.cbBoxTenLop_xeplich, self.txtNgay, self.cbBoxTG, self.cbBoxTinhTrang]
+        handleUpdate(self.treeWidgetCSVC_2, database.update_Xeplich, database.load_dataXeplich, input_widgets, self.tab_3)
+        self.load_name_Khoa()
+        self.load_name_Lop()
+        self.load_name_GV()
+        self.load_name_Mon()
+        self.load_name_Phong()
     def handleDeleteXeplich(self):
-        # Lấy dòng được chọn trong treeWidgetPH
-        selected_items = self.treeWidgetCSVC_2.selectedItems()
-
-        if not selected_items:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng chọn dòng cần xóa!")
-                return
-
-    # Lấy ID Phòng từ dòng đầu tiên được chọn (giả sử chỉ chọn một dòng)
-        id = selected_items[0].text(0)
-
-    # Hiển thị hộp thoại xác nhận xóa
-        reply = QMessageBox.question(self.treeWidgetCSVC, 'Xác nhận xóa', 
-                f'Bạn có chắc chắn muốn xóa lịch học có ID {id}?',
-                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
-                QMessageBox.StandardButton.No)
-
-        if reply == QMessageBox.StandardButton.Yes:
-
-                if database.delete_Xeplich(id):
-           
-                        self.loadDataToTreeWidgetXeplich()
-                        QMessageBox.information(self.treeWidgetCSVC_2, 'Thông báo', 'Xóa lịch học thành công!')
-        else:
-            QMessageBox.critical(self.treeWidgetCSVC_2, 'Lỗi', 'Không thể xóa lịch học này này!')   
+        handleDelete(self.treeWidgetCSVC_2, database.delete_Xeplich, database.load_dataXeplich, self.tab_3)
+        self.load_name_Khoa()
+        self.load_name_Lop()
+        self.load_name_GV()
+        self.load_name_Mon()
+        self.load_name_Phong()
     def handleSearchXeplich(self):
-        # Lấy nội dung từ ô input tìm kiếm
-        tinhTrang= self.txtSearchCsvc_2.text().strip()
-
-        if tinhTrang:
-                # Gọi hàm search_phong từ module database để tìm kiếm phòng học theo tên
-                tinhTrang_list = database.search_Xeplich(tinhTrang)
-
-        # Xóa dữ liệu cũ trên treeViewPH
-                self.treeWidgetCSVC_2.clear()
-
-        # Thêm dữ liệu mới vào treeViewPH
-                for tinhtrang in tinhTrang_list:
-                        item = QtWidgets.QTreeWidgetItem(self.treeWidgetCSVC_2)
-                        item.setText(0, str(tinhtrang[0]))  
-                        item.setText(1, str(tinhtrang[1]))  
-                        item.setText(2, str(tinhtrang[2]))  
-                        item.setText(3, str(tinhtrang[3]))  
-                        item.setText(4, str(tinhtrang[4]))  
-                        item.setText(5, str(tinhtrang[5]))  
-                        item.setText(6, str(tinhtrang[6]))  
-                        item.setText(7, str(tinhtrang[7]))  
-                        item.setText(8, str(tinhtrang[8]))  
-
-        else:
-                QMessageBox.warning(self.tab_3, "Thông báo", "Vui lòng nhập tên giảng viên để tìm kiếm!")
+        handleSearch(self.treeWidgetCSVC_2, database.search_Xeplich, database.load_dataXeplich, self.txtSearchCsvc_2, self.tab_3)
+        self.load_name_Khoa()
+        self.load_name_Lop()
+        self.load_name_GV()
+        self.load_name_Mon()
+        self.load_name_Phong()
     def handleInputChangedXeplich(self, text):
-        if not text:
-        # Nếu ô input rỗng, load lại dữ liệu ban đầu
-                self.loadDataToTreeWidgetXeplich()
-
-
-
-
-
-
-
+        handleInputChanged(self.treeWidgetCSVC_2, database.load_dataXeplich, text)
+# Giảng viên
+    def loadDataToTreeWidgetGV(self):
+        loadDataToTreeWidget(self.treeWidgetGV, database.load_dataGV)
+    def handleAddGV(self):
+        input_widgets = [self.txtIDGiangvien, self.txtTenGiangvien, self.txtSDT, self.cbBoxIDKhoa_Giangvien]
+        handleAdd(self.treeWidgetGV, database.add_GV, database.load_dataGV, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleUpdateGV(self):
+        input_widgets = [self.txtIDGiangvien, self.txtTenGiangvien, self.txtSDT, self.cbBoxIDKhoa_Giangvien]
+        handleUpdate(self.treeWidgetGV, database.update_GV, database.load_dataGV, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleDeleteGV(self):
+        handleDelete(self.treeWidgetGV, database.delete_GV, database.load_dataGV, self.tab_3)
+        self.load_id_khoa()
+    def handleSearchGV(self):
+        handleSearch(self.treeWidgetGV, database.search_GV, database.load_dataGV, self.txtSearchKhoa_2, self.tab_3)
+        self.load_id_khoa()
+    def handleInputChangedGV(self, text):
+        handleInputChanged(self.treeWidgetGV, database.load_dataGV, text)
+# Khoa
+    def loadDataToTreeWidgetKhoa(self):
+        loadDataToTreeWidget(self.treeWidgetKhoa, database.load_dataKhoa)
+    def handleAddKhoa(self):
+        input_widgets = [self.txtIDKhoa, self.txtTenKhoa]
+        handleAdd(self.treeWidgetKhoa, database.add_Khoa, database.load_dataKhoa, input_widgets, self.tab_3)
+    def handleUpdateKhoa(self):
+        input_widgets = [self.txtIDKhoa, self.txtTenKhoa]
+        handleUpdate(self.treeWidgetKhoa, database.update_Khoa, database.load_dataKhoa, input_widgets, self.tab_3)
+    def handleDeleteKhoa(self):
+        handleDelete(self.treeWidgetKhoa, database.delete_Khoa, database.load_dataKhoa, self.tab_3)
+    def handleSearchKhoa(self):
+        handleSearch(self.treeWidgetKhoa, database.search_Khoa, database.load_dataKhoa, self.txtSearchKhoa, self.tab_3)
+    def handleInputChangedKhoa(self, text):
+        handleInputChanged(self.treeWidgetKhoa, database.load_dataKhoa, text)
+# Lớp học
+    def loadDataToTreeWidgetLH(self):
+        loadDataToTreeWidget(self.treeWidgetLH, database.load_dataLH)
+    def handleAddLH(self):
+        input_widgets = [self.txtIDLop, self.txtIDTenLop, self.cbBoxIDKhoa_Lophoc]
+        handleAdd(self.treeWidgetLH, database.add_LH, database.load_dataLH, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleUpdateLH(self):
+        input_widgets = [self.txtIDLop, self.txtIDTenLop, self.cbBoxIDKhoa_Lophoc]
+        handleUpdate(self.treeWidgetLH, database.update_LH, database.load_dataLH, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleDeleteLH(self):
+        handleDelete(self.treeWidgetLH, database.delete_LH, database.load_dataLH, self.tab_3)
+        self.load_id_khoa()
+    def handleSearchLH(self):
+        handleSearch(self.treeWidgetLH, database.search_LH, database.load_dataLH, self.txtSearchLophoc, self.tab_3)
+        self.load_id_khoa()
+    def handleInputChangedLH(self, text):
+        handleInputChanged(self.treeWidgetLH, database.load_dataLH, text)
+# Môn học
+    def loadDataToTreeWidgetMH(self):
+        loadDataToTreeWidget(self.treeWidgetMH, database.load_data_monhoc)
+    def handleAddMH(self):
+        input_widgets = [self.txtIDMon, self.txtTenMon, self.txtSoTinChi, self.cbBoxIDKhoa_Monhoc]
+        handleAdd(self.treeWidgetMH, database.add_monhoc, database.load_data_monhoc, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleUpdateMH(self):
+        input_widgets = [self.txtIDMon, self.txtTenMon, self.txtSoTinChi, self.cbBoxIDKhoa_Monhoc]
+        handleUpdate(self.treeWidgetMH, database.update_MH, database.load_data_monhoc, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleDeleteMH(self):
+        handleDelete(self.treeWidgetMH, database.delete_MH, database.load_data_monhoc, self.tab_3)
+        self.load_id_khoa()
+    def handleSearchMH(self):
+        handleSearch(self.treeWidgetMH, database.search_MH, database.load_data_monhoc, self.txtSearchMonhoc, self.tab_3)
+        self.load_id_khoa()
+    def handleInputChangedMH(self, text):
+        handleInputChanged(self.treeWidgetMH, database.load_data_monhoc, text)
+# Phòng học
+    def loadDataToTreeWidgetPH(self):
+        loadDataToTreeWidget(self.treeWidgetPH, database.load_data)
+    def handleAddPH(self):
+        input_widgets = [self.txtIDPhong, self.txtTenPhong]
+        handleAdd(self.treeWidgetPH, database.add_phong, database.load_data, input_widgets, self.tab_3)
+    def handleUpdatePH(self):
+        input_widgets = [self.txtIDPhong, self.txtTenPhong]
+        handleUpdate(self.treeWidgetPH, database.update_phong, database.load_data, input_widgets, self.tab_3)
+        self.load_id_khoa()
+    def handleDeletePH(self):
+        handleDelete(self.treeWidgetPH, database.delete_phong, database.load_data, self.tab_3)
+        self.load_id_khoa()
+    def handleSearch(self):
+        handleSearch(self.treeWidgetPH, database.search_phong, database.load_data, self.txtSearchPH, self.tab_3)
+        self.load_id_khoa()
+    def handleInputChanged(self, text):
+        handleInputChanged(self.treeWidgetPH, database.load_data, text)
 
 
 

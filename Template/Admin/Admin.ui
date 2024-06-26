@@ -41,7 +41,7 @@ color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -1244,7 +1244,7 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
      </column>
      <column>
       <property name="text">
-       <string>Số lượng xấu</string>
+       <string>Số lượng hư hỏng</string>
       </property>
      </column>
     </widget>
@@ -1343,7 +1343,7 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <rect>
        <x>680</x>
        <y>70</y>
-       <width>101</width>
+       <width>131</width>
        <height>31</height>
       </rect>
      </property>
@@ -1353,7 +1353,7 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       </font>
      </property>
      <property name="text">
-      <string>Số lượng xấu:</string>
+      <string>Số lượng hư hỏng:</string>
      </property>
     </widget>
     <widget class="QComboBox" name="cbBoxIDcosovatchat">
@@ -1391,6 +1391,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
      </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QComboBox" name="cbBoxIDPhong_csvc">
      <property name="geometry">
@@ -1427,11 +1430,14 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
      </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QLineEdit" name="txtSoLuongTot">
      <property name="geometry">
       <rect>
-       <x>790</x>
+       <x>820</x>
        <y>20</y>
        <width>171</width>
        <height>31</height>
@@ -1452,7 +1458,7 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
     <widget class="QLineEdit" name="txtSoLuongXau">
      <property name="geometry">
       <rect>
-       <x>790</x>
+       <x>820</x>
        <y>70</y>
        <width>171</width>
        <height>31</height>
