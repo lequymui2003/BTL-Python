@@ -112,7 +112,7 @@ class Ui_Dialog(object):
     def openRegisterRoomDialog(self):
         from DKPhongHoc import Ui_Dialog
         self.PopWindowW = QtWidgets.QMainWindow()
-        self.ui_popup = Ui_Dialog()
+        self.ui_popup = Ui_Dialog(self.session)
         self.ui_popup.setupUi(self.PopWindowW)
         self.PopWindowW.show()
         

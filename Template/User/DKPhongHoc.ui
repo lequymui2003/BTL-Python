@@ -342,11 +342,6 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
      <string>Đã đăng ký</string>
     </property>
    </item>
-   <item>
-    <property name="text">
-     <string>Trống</string>
-    </property>
-   </item>
   </widget>
   <widget class="QPushButton" name="btnDKPH">
    <property name="geometry">

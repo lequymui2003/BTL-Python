@@ -602,7 +602,151 @@ def search_Xeplich(tinhTrang):
         result = cursor.fetchall()
 
         return result
+# xử lý sự kiện check giảng viên, lớp học, phòng học
+def check_Phong_Gio(ten_Phong, ngay, thoigian):
+    connection = create_connection()
+    cursor = connection.cursor()
 
+    query = "SELECT * FROM xeplich WHERE idPhong = %s AND Date = %s AND ThoiGian = %s"
+    cursor.execute(query, (ten_Phong, ngay, thoigian))
+    result = cursor.fetchone()
 
+    cursor.close()
+    connection.close()
+
+    if result:
+        return True
+    else:
+        return False
+def check_GV_Gio(ten_GV, ngay, thoigian):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    query = "SELECT * FROM xeplich WHERE idGV = %s AND Date = %s AND ThoiGian = %s"
+    cursor.execute(query, (ten_GV, ngay, thoigian))
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    if result:
+        return True
+    else:
+        return False
+def check_Lop_Gio(ten_Lop, ngay, thoigian):
+    connection = create_connection()
+    cursor = connection.cursor()
+
+    query = "SELECT * FROM xeplich WHERE idLop = %s AND Date = %s AND ThoiGian = %s"
+    cursor.execute(query, (ten_Lop, ngay, thoigian))
+    result = cursor.fetchone()
+
+    cursor.close()
+    connection.close()
+
+    if result:
+        return True
+    else:
+        return False
+# thống kê
+def load_dataThongKeCSVC():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = """SELECT 
+                    ctcosovatchat.idPhong, 
+                    phonghoc.tenPhong,
+                    cosovatchat.ten, 
+                    ctcosovatchat.SoLuongTot, 
+                    ctcosovatchat.SoLuongXau 
+                FROM 
+                    ctcosovatchat 
+                JOIN 
+                    cosovatchat ON ctcosovatchat.id = cosovatchat.id 
+                JOIN 
+                    phonghoc ON ctcosovatchat.idPhong = phonghoc.idPhong"""
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def search_ThongKe_CSVC(ten_Phong):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = """SELECT 
+                    ctcosovatchat.idPhong, 
+                    phonghoc.tenPhong,
+                    cosovatchat.ten, 
+                    ctcosovatchat.SoLuongTot, 
+                    ctcosovatchat.SoLuongXau 
+                FROM 
+                    ctcosovatchat 
+                JOIN 
+                    cosovatchat ON ctcosovatchat.id = cosovatchat.id 
+                JOIN 
+                    phonghoc ON ctcosovatchat.idPhong = phonghoc.idPhong
+                WHERE phonghoc.tenphong LIKE %s    
+                    """
+        cursor.execute(query, (f"%{ten_Phong}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
+def load_dataThongKeGiangvien():
+    connection = create_connection()
+    cursor = connection.cursor()
+    query = """SELECT 
+                    xeplich.idGV,
+                    giangvien.tenGV,
+                    monhoc.tenMon,
+                    phonghoc.tenPhong,
+                    xeplich.Date,
+                    xeplich.ThoiGian
+                FROM 
+                    xeplich 
+                JOIN 
+                    giangvien ON xeplich.idGV = giangvien.idGiangVien 
+                JOIN 
+                    monhoc ON xeplich.idMon = monhoc.idMon
+                JOIN 
+                    phonghoc ON xeplich.idPhong = phonghoc.idPhong    
+                    """
+    cursor.execute(query)
+    result = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result
+def search_ThongKeGiangvien(ten_GV):
+        
+        connection = create_connection()
+        cursor = connection.cursor()
+
+       
+        query = """SELECT 
+                    xeplich.idGV,
+                    giangvien.tenGV,
+                    monhoc.tenMon,
+                    phonghoc.tenPhong,
+                    xeplich.Date,
+                    xeplich.ThoiGian
+                FROM 
+                    xeplich 
+                JOIN 
+                    giangvien ON xeplich.idGV = giangvien.idGiangVien 
+                JOIN 
+                    monhoc ON xeplich.idMon = monhoc.idMon
+                JOIN 
+                    phonghoc ON xeplich.idPhong = phonghoc.idPhong 
+                WHERE giangvien.tenGV LIKE %s    
+                    """
+        cursor.execute(query, (f"%{ten_GV}%",))
+
+   
+        result = cursor.fetchall()
+
+        return result
 
 

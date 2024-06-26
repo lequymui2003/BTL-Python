@@ -17,7 +17,7 @@ def handleAdd(treeWidget, add_function, load_data_function, input_widgets, tab):
         return
     
     if not add_function(*inputs):
-        QMessageBox.warning(tab, "Thông báo", "ID đã tồn tại!")
+        QMessageBox.warning(tab, "Thông báo", "Thông tin đã tồn tại!")
         for widget in input_widgets:
             widget.clear()
         return

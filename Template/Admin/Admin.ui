@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1249</width>
-    <height>582</height>
+    <height>719</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
      <x>0</x>
      <y>50</y>
      <width>1251</width>
-     <height>531</height>
+     <height>671</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -41,7 +41,7 @@ color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>7</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -2043,6 +2043,166 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
        <width>181</width>
        <height>31</height>
       </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_8">
+    <attribute name="title">
+     <string>Thống kê</string>
+    </attribute>
+    <widget class="QTreeWidget" name="treeWidgetThongke_Giangvien">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>360</y>
+       <width>781</width>
+       <height>281</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>ID giảng viên</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên giảng viên</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên môn</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên phòng</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Ngày</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Thời gian</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QTreeWidget" name="treeWidgetThongKeCSVC">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>771</width>
+       <height>291</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <column>
+      <property name="text">
+       <string>ID phòng</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên Phòng</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Tên cơ sở vật chất</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Số lượng tốt</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Số lượng hư hỏng</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QLineEdit" name="txtSearchCsvc_3">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>30</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên phòng</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btSearchThongkeCSVC">
+     <property name="geometry">
+      <rect>
+       <x>980</x>
+       <y>80</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tìm kiếm</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="txtSearchCsvc_4">
+     <property name="geometry">
+      <rect>
+       <x>960</x>
+       <y>360</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
+color: black; /* Màu chữ đen */
+border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên giảng viên</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btSearchThongke_Giangvien">
+     <property name="geometry">
+      <rect>
+       <x>990</x>
+       <y>410</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(0, 0, 127);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Tìm kiếm</string>
      </property>
     </widget>
    </widget>
