@@ -419,7 +419,7 @@ def search_GV(ten_GV):
         result = cursor.fetchall()
 
         return result
-# thêm, sửa, xóa, tìm kiếm hiển thị bảng Giảng viên
+# thêm, sửa, xóa, tìm kiếm hiển thị bảng cơ sở vật chất
 def load_dataCSVC():
     connection = create_connection()
     cursor = connection.cursor()

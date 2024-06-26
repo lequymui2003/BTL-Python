@@ -16,7 +16,7 @@
   <widget class="QCommandLinkButton" name="commandLinkButton">
    <property name="geometry">
     <rect>
-     <x>980</x>
+     <x>1090</x>
      <y>10</y>
      <width>131</width>
      <height>48</height>
@@ -41,7 +41,7 @@ color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
@@ -111,6 +111,9 @@ color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên phòng</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchPH">
@@ -380,6 +383,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên môn</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchMH">
@@ -660,6 +666,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
      </property>
+     <property name="placeholderText">
+      <string>Nhập tên lớp</string>
+     </property>
     </widget>
     <widget class="QPushButton" name="btSearchLophoc">
      <property name="geometry">
@@ -850,6 +859,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên khoa</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchKhoa">
@@ -1123,6 +1135,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên giảng viên</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchGV">
@@ -1489,6 +1504,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tên phòng</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchCSVC">
@@ -1881,6 +1899,9 @@ border: 1px solid #cccccc; /* Viền màu xám */</string>
       <string notr="true">background-color: #f0f0f0; /* Màu nền xám nhạt */
 color: black; /* Màu chữ đen */
 border: 1px solid #cccccc; /* Viền màu xám */</string>
+     </property>
+     <property name="placeholderText">
+      <string>Nhập tình trạng phòng</string>
      </property>
     </widget>
     <widget class="QPushButton" name="btSearchxeplich">
