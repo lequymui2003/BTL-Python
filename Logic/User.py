@@ -16,6 +16,8 @@ from database_operations import *
 
 
 class Ui_Dialog(object):
+    def __init__(self, session):
+        self.session = session
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(1162, 565)
@@ -46,12 +48,14 @@ class Ui_Dialog(object):
         self.btnPopupDKPH.setObjectName("btnPopupDKPH")
 
         self.retranslateUi(Dialog)
+        self.checkSession(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
-        
+         # Kết nối tín hiệu nút Tìm kiếm với hàm tìm kiếm
+        self.btSearchLichhoc.clicked.connect(self.search)
         self.loadDataToTreeWidgetXeplich()
         self.txtSearchPH_User.textChanged.connect(self.handleInputChangedXeplich)
-        self.btSearchLichhoc.clicked.connect(self.handleSearchXeplich)
-
+        self.commandLinkButton.clicked.connect(self.confirm_logout)
+        self.btnPopupDKPH.clicked.connect(self.openRegisterRoomDialog)
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
@@ -69,20 +73,79 @@ class Ui_Dialog(object):
         self.btSearchLichhoc.setText(_translate("Dialog", "Tìm kiếm"))
         self.btnPopupDKPH.setText(_translate("Dialog", "Đăng ký phòng học"))
 
-   
     def loadDataToTreeWidgetXeplich(self):
         loadDataToTreeWidget(self.treeWidgetLichHoc, database.load_dataXeplich)
-    def handleSearchXeplich(self):
-        handleSearch(self.treeWidgetLichHoc, database.search_Xeplich, database.load_dataXeplich, self.txtSearchPH_User)
+    def search(self):
+        # Lấy từ khóa tìm kiếm từ ô nhập liệu
+        keyword = self.txtSearchPH_User.text()
+
+        # Giả sử bạn có hàm search_database để tìm kiếm dữ liệu từ cơ sở dữ liệu
+        results = database.search_Xeplich(keyword)  # Hàm này bạn cần triển khai dựa trên cơ sở dữ liệu của bạn
+
+        # Xóa tất cả các mục hiện tại trong treeWidgetLichHoc
+        self.treeWidgetLichHoc.clear()
+
+        # Thêm kết quả tìm kiếm vào treeWidgetLichHoc
+        for result in results:
+            item = QTreeWidgetItem(self.treeWidgetLichHoc)
+            item.setText(0, str(result[0]))
+            item.setText(1, str(result[1]))
+            item.setText(2, str(result[2]))
+            item.setText(3, str(result[3]))
+            item.setText(4, str(result[4]))
+            item.setText(5, str(result[5]))
+            item.setText(6, str(result[6]))
+            item.setText(7, str(result[7]))
+            item.setText(8, str(result[8]))
+    
     def handleInputChangedXeplich(self, text):
         handleInputChanged(self.treeWidgetLichHoc, database.load_dataXeplich, text)
 
+    def checkSession(self, Dialog):
+        if 'username' not in self.session:
+            QMessageBox.warning(Dialog, "Thông báo", "Vui lòng đăng nhập trước khi truy cập trang này!")
+            Dialog.close()  # Đóng cửa sổ Admin
+            self.openLoginWindow()
+        else:
+            Dialog.show() 
+
+    def openRegisterRoomDialog(self):
+        from DKPhongHoc import Ui_Dialog
+        self.PopWindowW = QtWidgets.QMainWindow()
+        self.ui_popup = Ui_Dialog()
+        self.ui_popup.setupUi(self.PopWindowW)
+        self.PopWindowW.show()
+        
+    def openLoginWindow(self):
+        from Login import Ui_MainWindow
+        self.loginWindow = QtWidgets.QMainWindow()
+        self.ui_login = Ui_MainWindow()
+        self.ui_login.setupUi(self.loginWindow)
+        self.loginWindow.show()
+
+    def confirm_logout(self):
+        reply = QMessageBox.question(None, 'Xác nhận đăng xuất', 
+                                     'Bạn có chắc chắn muốn đăng xuất?',
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if reply == QMessageBox.StandardButton.Yes:
+            self.logout()
+
+    def logout(self):
+        # Xóa thông tin phiên đăng nhập
+        self.session.clear()
+        # Lưu trạng thái của cửa sổ hiện tại
+        Dialog = QtWidgets.QApplication.activeWindow()
+        if Dialog is not None:
+            Dialog.close()
+        # Mở cửa sổ đăng nhập
+        self.openLoginWindow()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
+    session = {}  # Tạo một session rỗng
+    ui = Ui_Dialog(session)
     ui.setupUi(Dialog)
     Dialog.show()
     sys.exit(app.exec())

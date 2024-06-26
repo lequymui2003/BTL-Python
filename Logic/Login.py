@@ -139,9 +139,10 @@ class Ui_MainWindow(object):
                 self.session['role'] = role
                 if role == 'admin':
                     QMessageBox.information(None, "Thông báo", "Đăng nhập thành công! Bạn là admin.")
-                    self.openAdminWindow()  # Chuyển hướng đến trang Admin
+                    self.openAdminWindow()
                 else:
                     QMessageBox.information(None, "Thông báo", "Đăng nhập thành công! Bạn là user.")
+                    self.openUserWindow()
             else:
                 QMessageBox.warning(None, "Thông báo", "Tên đăng nhập hoặc mật khẩu không đúng!")
         else:
@@ -174,6 +175,15 @@ class Ui_MainWindow(object):
         #print(f"session: {self.session["username"]}") 
         self.ui_admin.setupUi(self.adminWindow)
         self.adminWindow.show()
+        MainWindow.close()  # Đóng cửa sổ đăng nhập
+
+    def openUserWindow(self):
+        from User import Ui_Dialog
+        self.userWindow = QtWidgets.QMainWindow()
+        self.ui_user = Ui_Dialog(self.session)
+        #print(f"session: {self.session["username"]}") 
+        self.ui_user.setupUi(self.userWindow)
+        self.userWindow.show()
         MainWindow.close()  # Đóng cửa sổ đăng nhập
 
 
